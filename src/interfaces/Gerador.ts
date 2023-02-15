@@ -1,4 +1,4 @@
-export default interface IGerador{
+export default interface IGerador {
     id: number,
     nome: string,
     endereco: {
@@ -7,11 +7,11 @@ export default interface IGerador{
         bairro: string,
         cidade: string,
         estado: string,
-        pais: string,
-        numero: string,
         complemento?: string
     },
     telefone: string,
     email: string,
     senha: string,
+    cpf?: string,
+    cnpj?: string,
 }

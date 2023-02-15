@@ -1,4 +1,4 @@
-export default interface ICatador{
+export default interface ICatador {
     id: number,
     nome: string,
     endereco: {
@@ -7,12 +7,12 @@ export default interface ICatador{
         bairro: string,
         cidade: string,
         estado: string,
-        pais: string,
-        numero: string,
         complemento?: string
     },
     telefone: string,
     email: string,
     senha: string,
-    materiais: [number]
+    materiais: [number],
+    cpf?: string,
+    cnpj?: string,
 }
