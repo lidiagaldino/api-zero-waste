@@ -3,8 +3,6 @@ export default interface IEndereco {
     logradouro: string,
     bairro: string,
     cidade: string,
-    estado: string,
-    pais: string,
-    numero: string,
-    complemento?: string
+    estado: string
+    complemento: string | null
 }

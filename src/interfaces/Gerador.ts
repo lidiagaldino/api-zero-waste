@@ -7,11 +7,12 @@ export default interface IGerador {
         bairro: string,
         cidade: string,
         estado: string,
-        complemento?: string
+        complemento: string | null
     },
     telefone: string,
     email: string,
     senha: string,
     cpf?: string,
     cnpj?: string,
+    data_nascimento: Date
 }

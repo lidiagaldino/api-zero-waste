@@ -7,7 +7,7 @@ export default interface ICatador {
         bairro: string,
         cidade: string,
         estado: string,
-        complemento?: string
+        complemento: string | null
     },
     telefone: string,
     email: string,
@@ -15,4 +15,5 @@ export default interface ICatador {
     materiais: [number],
     cpf?: string,
     cnpj?: string,
+    data_nascimento: Date
 }

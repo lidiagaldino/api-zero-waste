@@ -11,7 +11,7 @@ export const catadorBodyValidation: yup.SchemaOf<IBodyProps> = yup.object().shap
         bairro: yup.string().required(),
         cidade: yup.string().required(),
         estado: yup.string().required(),
-        complemento: yup.string()
+        complemento: yup.string().nullable().required()
     }),
     telefone: yup.string().required().min(14),
     email: yup.string().email().required().min(10),
@@ -24,5 +24,6 @@ export const catadorBodyValidation: yup.SchemaOf<IBodyProps> = yup.object().shap
     cpf: yup.string().when('cnpj', {
         is: null,
         then: yup.string().required()
-    })
+    }),
+    data_nascimento: yup.date().required()
 })
