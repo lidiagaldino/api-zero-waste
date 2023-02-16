@@ -8,6 +8,8 @@ import Gerador from '../DAO/Gerador'
 
 import IGerador from '../interfaces/Gerador'
 
+type tipoPessoa = 'fisica' | 'juridica'
+
 class GeradorController {
 
     public async index(_req: Request, res: Response) {
@@ -22,6 +24,8 @@ class GeradorController {
     public async store(req: Request<{}, {}, Omit<IGerador, 'id'>>, res: Response) {
 
         const body = req.body
+        let statPessoa: tipoPessoa = "fisica"
+        let idPessoa: number = 0
 
         const { senha, telefone, email } = body
 
@@ -34,28 +38,77 @@ class GeradorController {
             const { nome, cpf, data_nascimento } = body
 
             const pessoaFisica = await Pessoas.newPessoaFisica({ nome, cpf, data_nascimento, id_usuario: novoUsuario })
+            statPessoa = 'fisica'
 
-            if (!pessoaFisica) return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: 'Não foi possível realizar essa ação' })
+            if (!pessoaFisica) {
+                await Usuario.deleteUser(novoUsuario)
+                return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: 'Não foi possível realizar essa ação' })
+            }
 
         } else if (body.cnpj) {
             const { nome, cnpj } = body
 
             const pessoaJuridica = await Pessoas.newPessoaJuridica({ nome, cnpj, id_usuario: novoUsuario })
+            statPessoa = 'juridica'
 
-            if (!pessoaJuridica) return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: 'Não foi possível realizar essa ação' })
+            if (!pessoaJuridica) {
+
+                await Usuario.deleteUser(novoUsuario)
+                return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: 'Não foi possível realizar essa ação' })
+            }
+
         }
 
         const novoGerador = await Gerador.newGerador(novoUsuario)
 
-        if (!novoGerador) return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: 'Não foi possível realizar essa ação' })
+        if (!novoGerador) {
+
+            if (statPessoa == 'fisica') {
+                await Pessoas.deletePessoaFisica(idPessoa)
+            } else {
+                await Pessoas.deletePessoaJuridica(idPessoa)
+            }
+
+            await Usuario.deleteUser(novoUsuario)
+
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: 'Não foi possível realizar essa ação' })
+        }
 
         const novoEndereco = await Endereco.newEndereco(body.endereco)
 
-        if (!novoEndereco) return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: 'Não foi possível realizar essa ação' })
+        if (!novoEndereco) {
 
-        const novoEnderecoCatador = await Endereco.newEnderecoUser(novoUsuario, novoEndereco)
+            if (statPessoa == 'fisica') {
+                await Pessoas.deletePessoaFisica(idPessoa)
+            } else {
+                await Pessoas.deletePessoaJuridica(idPessoa)
+            }
 
-        if (!novoEnderecoCatador) return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: 'Não foi possível realizar essa ação' })
+            await Gerador.deleteGerador(novoGerador)
+
+            await Usuario.deleteUser(novoUsuario)
+
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: 'Não foi possível realizar essa ação' })
+        }
+
+        const novoEnderecoGerador = await Endereco.newEnderecoUser(novoUsuario, novoEndereco)
+
+        if (!novoEnderecoGerador) {
+
+            if (statPessoa == 'fisica') {
+                await Pessoas.deletePessoaFisica(idPessoa)
+            } else {
+                await Pessoas.deletePessoaJuridica(idPessoa)
+            }
+
+            await Endereco.deleteEndereco(novoEndereco)
+
+            await Gerador.deleteGerador(novoGerador)
+
+            await Usuario.deleteUser(novoUsuario)
+
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: 'Não foi possível realizar essa ação' })
+        }
 
         return res.status(StatusCodes.CREATED).json({ message: 'Item criado com sucesso' })
 

@@ -1,7 +1,9 @@
 import { PrismaClient } from "@prisma/client"
+import { array } from "yup"
 const prisma = new PrismaClient()
 
 import ICatador from '../interfaces/Catador'
+import IlastId from "../interfaces/Ids"
 
 class Catador {
 
@@ -24,7 +26,7 @@ class Catador {
                         INNER JOIN tbl_endereco
                             ON tbl_endereco.id = tbl_usuario_endereco.id_endereco`
 
-        const result = await prisma.$queryRawUnsafe(sql)
+        const result: ICatador[] = await prisma.$queryRawUnsafe(sql)
 
         return (result.length > 0 ? result : false)
     }
@@ -37,24 +39,36 @@ class Catador {
                         ) VALUES (
                             ${idUsuario}
                         );`
-            
+
             const result = await prisma.$executeRawUnsafe(sql)
 
-            if(result){ 
+            if (result) {
                 const selectId = 'select id from tbl_catador order by id desc limit 1'
-                const lastId = await prisma.$queryRawUnsafe(selectId)
+                const lastId: IlastId = await prisma.$queryRawUnsafe(selectId)
 
                 return lastId[0].id
 
             }
 
             return false
-            
+
         } catch (error) {
             return false
         }
+    }
 
+    public async deleteCatador(id: number): Promise<boolean> {
 
+        try {
+            const sql = `delete from tbl_catador where id = ${id}`
+
+            const result = await prisma.$executeRawUnsafe(sql)
+
+            return (!!result)
+
+        } catch (error) {
+            return false
+        }
     }
 }
 

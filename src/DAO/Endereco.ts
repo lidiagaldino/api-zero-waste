@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client"
 const prisma = new PrismaClient()
 
 import IEndereco from "../interfaces/Endereco"
+import IlastId from "../interfaces/Ids"
 
 class Endereco {
 
@@ -29,7 +30,7 @@ class Endereco {
 
             if (result) {
                 const selectId = 'select id from tbl_endereco order by id desc limit 1'
-                const lastId = await prisma.$queryRawUnsafe(selectId)
+                const lastId: IlastId[] = await prisma.$queryRawUnsafe(selectId)
 
                 return lastId[0].id
             }
@@ -55,6 +56,36 @@ class Endereco {
             const result = await prisma.$executeRawUnsafe(sql)
 
             return (!!result)
+        } catch (error) {
+            return false
+        }
+    }
+
+    public async deleteEndereco(id: number): Promise<boolean> {
+
+        try {
+
+            const sql = `delete from tbl_endereco where id = ${id}`
+
+            const result = await prisma.$executeRawUnsafe(sql)
+
+            return (!!result)
+
+        } catch (error) {
+            return false
+        }
+    }
+
+    public async deleteUsuarioEndereco(id: number): Promise<boolean> {
+
+        try {
+
+            const sql = `delete from tbl_usuario_endereco where id = ${id}`
+
+            const result = await prisma.$executeRawUnsafe(sql)
+
+            return (!!result)
+
         } catch (error) {
             return false
         }

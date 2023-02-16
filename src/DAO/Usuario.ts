@@ -2,6 +2,8 @@ import { PrismaClient } from "@prisma/client"
 const prisma = new PrismaClient()
 
 import IUsuario from "../interfaces/Usuario"
+import IlastId from "../interfaces/Ids"
+
 
 class Usuario {
 
@@ -22,7 +24,7 @@ class Usuario {
 
             if (result) {
                 const selectId = 'select id from tbl_usuario order by id desc limit 1'
-                const lastId = await prisma.$queryRawUnsafe(selectId)
+                const lastId: IlastId[] = await prisma.$queryRawUnsafe(selectId)
 
                 return lastId[0].id
             }
@@ -34,13 +36,28 @@ class Usuario {
         }
     }
 
-    public async getUserBy(campo: string, value: string): Promise<Omit<IUsuario, 'senha'> | false> {
+    public async getUserBy(campo: string, value: string): Promise<Omit<IUsuario, 'senha'>[] | false> {
 
         const sql = `select telefone, email, id from tbl_usuario where ${campo} = '${value}'`
 
-        const result = await prisma.$queryRawUnsafe(sql)
+        const result: Omit<IUsuario, 'senha'>[] = await prisma.$queryRawUnsafe(sql)
 
         return (result.length > 0 ? result : false)
+    }
+
+    public async deleteUser(id: number): Promise<boolean> {
+
+        try {
+
+            const sql = `delete from tbl_usuario where id = ${id}`
+
+            const result = await prisma.$executeRawUnsafe(sql)
+
+            return (!!result)
+
+        } catch (error) {
+            return false
+        }
     }
 }
 

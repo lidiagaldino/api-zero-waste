@@ -2,10 +2,11 @@ import { PrismaClient } from "@prisma/client"
 const prisma = new PrismaClient()
 
 import IGerador from '../interfaces/Gerador'
+import IlastId from "../interfaces/Ids"
 
-class Gerador{
+class Gerador {
 
-    public async getAll(): Promise<IGerador[] | false>{
+    public async getAll(): Promise<IGerador[] | false> {
 
         const sql = `SELECT tbl_usuario_endereco.id_usuario, tbl_usuario_endereco.id_endereco, 
                         tbl_usuario.telefone, tbl_usuario.email, tbl_usuario.senha,
@@ -24,7 +25,7 @@ class Gerador{
                         INNER JOIN tbl_endereco
                             ON tbl_endereco.id = tbl_usuario_endereco.id_endereco;`
 
-        const result = await prisma.$queryRawUnsafe(sql)
+        const result: IGerador[] = await prisma.$queryRawUnsafe(sql)
 
         return (result.length > 0 ? result : false)
     }
@@ -32,7 +33,7 @@ class Gerador{
     public async newGerador(idUsuario: number): Promise<number | false> {
 
         try {
-            
+
             const sql = `INSERT INTO tbl_gerador(
                             id_usuario
                         ) VALUES (
@@ -43,12 +44,27 @@ class Gerador{
 
             if (result) {
                 const selectId = 'select id from tbl_gerador order by id desc limit 1'
-                const lastId = await prisma.$queryRawUnsafe(selectId)
+                const lastId: IlastId[] = await prisma.$queryRawUnsafe(selectId)
 
                 return lastId[0].id
             }
 
             return false
+        } catch (error) {
+            return false
+        }
+    }
+
+    public async deleteGerador(id: number): Promise<boolean> {
+
+        try {
+
+            const sql = `delete from tbl_gerador where id = ${id}`
+
+            const result = await prisma.$executeRawUnsafe(sql)
+
+            return (!!result)
+
         } catch (error) {
             return false
         }
