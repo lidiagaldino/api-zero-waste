@@ -16,13 +16,15 @@ export const geradorBodyValidation: yup.SchemaOf<IBodyProps> = yup.object().shap
     telefone: yup.string().required().min(14),
     email: yup.string().email().required(),
     senha: yup.string().required().min(5),
-    cnpj: yup.string().when('cpf', {
-        is: null,
-        then: yup.string().required()
+    cnpj: yup.string().test(function (value) {
+        const { cpf } = this.parent
+        if (!cpf) return value != null
+        return true
     }),
-    cpf: yup.string().when('cnpj', {
-        is: null,
-        then: yup.string().required()
+    cpf: yup.string().test(function (value) {
+        const { cnpj } = this.parent
+        if (!cnpj) return value != null
+        return true
     }),
     data_nascimento: yup.date().required()
 })

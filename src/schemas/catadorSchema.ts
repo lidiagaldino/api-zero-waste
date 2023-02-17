@@ -17,13 +17,15 @@ export const catadorBodyValidation: yup.SchemaOf<IBodyProps> = yup.object().shap
     email: yup.string().email().required().min(10),
     senha: yup.string().required().min(5),
     materiais: yup.array().of(yup.number().required()).required(),
-    cnpj: yup.string().when('cpf', {
-        is: null,
-        then: yup.string().required()
+    cnpj: yup.string().test(function (value) {
+        const { cpf } = this.parent
+        if (!cpf) return value != null
+        return true
     }),
-    cpf: yup.string().when('cnpj', {
-        is: null,
-        then: yup.string().required()
+    cpf: yup.string().test(function (value) {
+        const { cnpj } = this.parent
+        if (!cnpj) return value != null
+        return true
     }),
     data_nascimento: yup.date().required()
 })
