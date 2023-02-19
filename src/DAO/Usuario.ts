@@ -17,13 +17,16 @@ class Usuario {
                     telefone: usuario.telefone,
                     senha: usuario.senha,
                     catador: {
-                        create: {
-                            materiais_catador: {
-                                create: {
-                                    id_materiais: usuario.materiais[0].toString()
+                        create: usuario.materiais.map(materialCatador => {
+                            return {
+                                materiais_catador: {
+                                    create: {
+                                        material: materialCatador
+                                    }
                                 }
                             }
-                        }
+                        })
+
                     },
                     endereco_usuario: {
                         create: {
