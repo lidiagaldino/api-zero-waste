@@ -1,24 +1,26 @@
 import express from 'express'
 import cors from 'cors'
-import routes from './routes/catadorRouter'
+import catadorRoutes from './routes/catadorRouter'
+import geradorRoutes from './routes/geradorRouter'
 
-class App{
+class App {
     public app: express.Application
 
-    public constructor(){
-        this.app = express()   
-        
+    public constructor() {
+        this.app = express()
+
         this.middleware()
         this.routes()
     }
 
-    private middleware(){
+    private middleware() {
         this.app.use(cors())
         this.app.use(express.json())
     }
 
-    private routes(){
-        this.app.use('/', routes)
+    private routes() {
+        this.app.use('/catador', catadorRoutes)
+        this.app.use('/gerador', geradorRoutes)
     }
 }
 
