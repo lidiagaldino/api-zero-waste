@@ -17,15 +17,7 @@ class Usuario {
                     telefone: usuario.telefone,
                     senha: usuario.senha,
                     catador: {
-                        create: usuario.materiais.map(materialCatador => {
-                            return {
-                                materiais_catador: {
-                                    create: {
-                                        material: materialCatador
-                                    }
-                                }
-                            }
-                        })
+                        create: {}
 
                     },
                     endereco_usuario: {
@@ -50,8 +42,27 @@ class Usuario {
                         }
                     }
 
+                },
+                include: {
+                    catador: {
+                        select: {
+                            id: true
+                        }
+                    }
                 }
             })
+
+            let teste: any
+
+            usuario.materiais.map(async item => {
+                teste = await prisma.materiaisCatador.create({
+                    data: {
+                        id_catador: result.catador[0].id,
+                        id_materiais: item
+                    }
+                })
+            })
+
 
             return (result ? result : false)
 
