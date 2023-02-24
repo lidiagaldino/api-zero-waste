@@ -12,7 +12,7 @@ export default interface ICatador {
     telefone: string,
     email: string,
     senha: string,
-    materiais: [number],
+    materiais: [string],
     cpf?: string,
     cnpj?: string,
     data_nascimento: Date

@@ -16,7 +16,7 @@ export const catadorBodyValidation: yup.SchemaOf<IBodyProps> = yup.object().shap
     telefone: yup.string().required().min(14),
     email: yup.string().email().required().min(10),
     senha: yup.string().required().min(5),
-    materiais: yup.array().of(yup.number().required()).required(),
+    materiais: yup.array().of(yup.string().uuid().required()).required(),
     cnpj: yup.string().test(function (value) {
         const { cpf } = this.parent
         if (!cpf) return value != null
