@@ -2,6 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import catadorRoutes from './routes/catadorRouter'
 import geradorRoutes from './routes/geradorRouter'
+import materiaisRoutes from './routes/materiaisRoutes'
 
 class App {
     public app: express.Application
@@ -21,6 +22,7 @@ class App {
     private routes() {
         this.app.use('/catador', catadorRoutes)
         this.app.use('/gerador', geradorRoutes)
+        this.app.use('/materiais', materiaisRoutes)
     }
 }
 
