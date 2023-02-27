@@ -1,6 +1,8 @@
 import { PrismaClient } from "@prisma/client"
 const prisma = new PrismaClient()
 
+import bcrypt from 'bcryptjs'
+
 import ICatador from "../interfaces/Catador"
 import IGerador from "../interfaces/Gerador"
 
@@ -15,7 +17,7 @@ class Usuario {
                 data: {
                     email: usuario.email,
                     telefone: usuario.telefone,
-                    senha: usuario.senha,
+                    senha: bcrypt.hashSync(usuario.senha, 8),
                     catador: {
                         create: {}
 
@@ -64,7 +66,7 @@ class Usuario {
             })
 
 
-            return (result ? result : false)
+            return (teste ? teste : false)
 
         } catch (error) {
             console.log(error);
@@ -117,7 +119,7 @@ class Usuario {
         }
     }
 
-    public async getUserBy(value: string): Promise<boolean> {
+    public async getUserBy(value: string): Promise<boolean | any> {
 
         const result = await prisma.usuario.findFirst({
             where: {
@@ -125,7 +127,7 @@ class Usuario {
             }
         })
 
-        return (result != null ? true : false)
+        return (result != null ? result : false)
 
 
     }
