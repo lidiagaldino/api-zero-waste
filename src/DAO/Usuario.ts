@@ -61,12 +61,87 @@ class Usuario {
                     data: {
                         id_catador: result.catador[0].id,
                         id_materiais: item
+                    },
+                    include: {
+                        catador: true
                     }
                 })
             })
 
+            console.log(teste);
+
 
             return (teste ? teste : false)
+
+        } catch (error) {
+            console.log(error);
+            return error
+        }
+    }
+
+    public async newUserCatadorJud(usuario: Omit<ICatador, 'id'>): Promise<Usuario | any> {
+
+        try {
+            if (usuario.cnpj) {
+                const result = await prisma.usuario.create({
+                    data: {
+                        email: usuario.email,
+                        telefone: usuario.telefone,
+                        senha: bcrypt.hashSync(usuario.senha, 8),
+                        catador: {
+                            create: {}
+
+                        },
+                        endereco_usuario: {
+                            create: {
+                                endereco: {
+                                    create: {
+                                        bairro: usuario.endereco.bairro,
+                                        cep: usuario.endereco.cep,
+                                        cidade: usuario.endereco.cidade,
+                                        estado: usuario.endereco.estado,
+                                        logradouro: usuario.endereco.logradouro,
+                                        complemento: usuario.endereco.complemento
+                                    }
+                                }
+                            }
+                        },
+                        pessoa_juridica: {
+                            create: {
+                                cnpj: usuario.cnpj,
+                                nome_fantasia: usuario.nome
+                            }
+                        }
+
+                    },
+                    include: {
+                        catador: {
+                            select: {
+                                id: true
+                            }
+                        }
+                    }
+                })
+
+                let teste: any
+
+                usuario.materiais.map(async item => {
+                    teste = await prisma.materiaisCatador.create({
+                        data: {
+                            id_catador: result.catador[0].id,
+                            id_materiais: item
+                        },
+                        include: {
+                            catador: true
+                        }
+                    })
+                })
+
+                console.log(teste);
+
+
+                return (teste ? teste : false)
+            }
 
         } catch (error) {
             console.log(error);
@@ -112,6 +187,52 @@ class Usuario {
             })
 
             return (result ? result : false)
+
+        } catch (error) {
+            console.log(error);
+            return error
+        }
+    }
+
+    public async newUserGeradorJud(usuario: Omit<IGerador, 'id'>): Promise<Usuario | any> {
+
+        try {
+
+            if (usuario.cnpj) {
+                const result = await prisma.usuario.create({
+                    data: {
+                        email: usuario.email,
+                        telefone: usuario.telefone,
+                        senha: usuario.senha,
+                        endereco_usuario: {
+                            create: {
+                                endereco: {
+                                    create: {
+                                        bairro: usuario.endereco.bairro,
+                                        cep: usuario.endereco.cep,
+                                        cidade: usuario.endereco.cidade,
+                                        estado: usuario.endereco.estado,
+                                        logradouro: usuario.endereco.logradouro,
+                                        complemento: usuario.endereco.complemento
+                                    }
+                                }
+                            }
+                        },
+                        pessoa_juridica: {
+                            create: {
+                                cnpj: usuario.cnpj,
+                                nome_fantasia: usuario.nome
+                            }
+                        },
+                        gerador: {
+                            create: {}
+                        }
+
+                    }
+                })
+
+                return (result ? result : false)
+            }
 
         } catch (error) {
             console.log(error);

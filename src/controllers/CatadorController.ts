@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from 'express'
+import { Request, Response } from 'express'
 import Catador from '../DAO/Catador'
 import Usuario from '../DAO/Usuario'
 
@@ -21,7 +21,10 @@ class CatadorController {
 
         const body = req.body
 
-        const rs = await Usuario.newUserCatador(body)
+        let rs: any
+
+        if (body.cnpj) rs = await Usuario.newUserCatadorJud(body)
+        else rs = await Usuario.newUserCatador(body)
 
         return res.send(rs)
     }
