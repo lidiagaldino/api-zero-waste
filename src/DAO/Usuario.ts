@@ -71,7 +71,7 @@ class Usuario {
             console.log(teste);
 
 
-            return (teste ? teste : false)
+            return (result ? result : false)
 
         } catch (error) {
             console.log(error);
@@ -140,7 +140,7 @@ class Usuario {
                 console.log(teste);
 
 
-                return (teste ? teste : false)
+                return (result ? result : false)
             }
 
         } catch (error) {
