@@ -21,7 +21,10 @@ class GeradorController {
 
         const body = req.body
 
-        const rs = await Usuario.newUserGerador(body)
+        let rs: any
+
+        if (body.cnpj) rs = await Usuario.newUserGeradorJud(body)
+        else rs = await Usuario.newUserGerador(body)
 
         return res.send(rs)
     }
