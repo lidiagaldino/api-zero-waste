@@ -160,7 +160,7 @@ class Usuario {
                     data: {
                         email: usuario.email,
                         telefone: usuario.telefone,
-                        senha: usuario.senha,
+                        senha: bcrypt.hashSync(usuario.senha),
                         endereco_usuario: {
                             create: {
                                 endereco: {
@@ -207,7 +207,7 @@ class Usuario {
                     data: {
                         email: usuario.email,
                         telefone: usuario.telefone,
-                        senha: usuario.senha,
+                        senha: bcrypt.hashSync(usuario.senha),
                         endereco_usuario: {
                             create: {
                                 endereco: {
