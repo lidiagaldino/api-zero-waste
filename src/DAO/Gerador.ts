@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client"
+import IGerador from "../interfaces/Gerador"
 const prisma = new PrismaClient()
 
 class Gerador {

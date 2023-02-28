@@ -13,65 +13,67 @@ class Usuario {
 
         try {
 
-            const result = await prisma.usuario.create({
-                data: {
-                    email: usuario.email,
-                    telefone: usuario.telefone,
-                    senha: bcrypt.hashSync(usuario.senha, 8),
-                    catador: {
-                        create: {}
+            if (usuario.cpf) {
+                const result = await prisma.usuario.create({
+                    data: {
+                        email: usuario.email,
+                        telefone: usuario.telefone,
+                        senha: bcrypt.hashSync(usuario.senha, 8),
+                        catador: {
+                            create: {}
 
-                    },
-                    endereco_usuario: {
-                        create: {
-                            endereco: {
-                                create: {
-                                    bairro: usuario.endereco.bairro,
-                                    cep: usuario.endereco.cep,
-                                    cidade: usuario.endereco.cidade,
-                                    estado: usuario.endereco.estado,
-                                    logradouro: usuario.endereco.logradouro,
-                                    complemento: usuario.endereco.complemento
+                        },
+                        endereco_usuario: {
+                            create: {
+                                endereco: {
+                                    create: {
+                                        bairro: usuario.endereco.bairro,
+                                        cep: usuario.endereco.cep,
+                                        cidade: usuario.endereco.cidade,
+                                        estado: usuario.endereco.estado,
+                                        logradouro: usuario.endereco.logradouro,
+                                        complemento: usuario.endereco.complemento
+                                    }
                                 }
                             }
+                        },
+                        pessoa_fisica: {
+                            create: {
+                                cpf: usuario.cpf,
+                                data_nascimento: usuario.data_nascimento,
+                                nome: usuario.nome
+                            }
                         }
-                    },
-                    pessoa_fisica: {
-                        create: {
-                            cpf: '12345-12345',
-                            data_nascimento: usuario.data_nascimento,
-                            nome: usuario.nome
-                        }
-                    }
 
-                },
-                include: {
-                    catador: {
-                        select: {
-                            id: true
-                        }
-                    }
-                }
-            })
-
-            let teste: any
-
-            usuario.materiais.map(async item => {
-                teste = await prisma.materiaisCatador.create({
-                    data: {
-                        id_catador: result.catador[0].id,
-                        id_materiais: item
                     },
                     include: {
-                        catador: true
+                        catador: {
+                            select: {
+                                id: true
+                            }
+                        }
                     }
                 })
-            })
 
-            console.log(teste);
+                let teste: any
+
+                usuario.materiais.map(async item => {
+                    teste = await prisma.materiaisCatador.create({
+                        data: {
+                            id_catador: result.catador[0].id,
+                            id_materiais: item
+                        },
+                        include: {
+                            catador: true
+                        }
+                    })
+                })
+
+                console.log(teste);
 
 
-            return (result ? result : false)
+                return (result ? result : false)
+            }
 
         } catch (error) {
             console.log(error);
@@ -153,43 +155,45 @@ class Usuario {
 
         try {
 
-            const result = await prisma.usuario.create({
-                data: {
-                    email: usuario.email,
-                    telefone: usuario.telefone,
-                    senha: usuario.senha,
-                    endereco_usuario: {
-                        create: {
-                            endereco: {
-                                create: {
-                                    bairro: usuario.endereco.bairro,
-                                    cep: usuario.endereco.cep,
-                                    cidade: usuario.endereco.cidade,
-                                    estado: usuario.endereco.estado,
-                                    logradouro: usuario.endereco.logradouro,
-                                    complemento: usuario.endereco.complemento
+            if (usuario.cpf) {
+                const result = await prisma.usuario.create({
+                    data: {
+                        email: usuario.email,
+                        telefone: usuario.telefone,
+                        senha: usuario.senha,
+                        endereco_usuario: {
+                            create: {
+                                endereco: {
+                                    create: {
+                                        bairro: usuario.endereco.bairro,
+                                        cep: usuario.endereco.cep,
+                                        cidade: usuario.endereco.cidade,
+                                        estado: usuario.endereco.estado,
+                                        logradouro: usuario.endereco.logradouro,
+                                        complemento: usuario.endereco.complemento
+                                    }
                                 }
                             }
+                        },
+                        pessoa_fisica: {
+                            create: {
+                                cpf: usuario.cpf,
+                                data_nascimento: usuario.data_nascimento,
+                                nome: usuario.nome
+                            }
+                        },
+                        gerador: {
+                            create: {}
                         }
-                    },
-                    pessoa_fisica: {
-                        create: {
-                            cpf: '12345-12345',
-                            data_nascimento: usuario.data_nascimento,
-                            nome: usuario.nome
-                        }
-                    },
-                    gerador: {
-                        create: {}
+
                     }
+                })
 
-                }
-            })
+                return (result ? result : false)
+            }
 
-            return (result ? result : false)
 
         } catch (error) {
-            console.log(error);
             return error
         }
     }
@@ -245,11 +249,29 @@ class Usuario {
         const result = await prisma.usuario.findFirst({
             where: {
                 email: value
+            },
+            include: {
+                catador: {
+                    include: {
+                        materiais_catador: {
+                            include: {
+                                material: true
+                            }
+                        }
+                    }
+                },
+                gerador: true,
+                pessoa_fisica: true,
+                pessoa_juridica: true,
+                endereco_usuario: {
+                    include: {
+                        endereco: true
+                    }
+                }
             }
         })
 
         return (result != null ? result : false)
-
 
     }
 
