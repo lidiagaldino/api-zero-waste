@@ -21,10 +21,10 @@ class App {
     }
 
     private routes() {
-        this.app.use('/catador', catadorRoutes)
-        this.app.use('/gerador', geradorRoutes)
-        this.app.use('/materiais', materiaisRoutes)
-        this.app.use('/user', userRouter)
+        this.app.use('/.netlify/functions/api/catador', catadorRoutes)
+        this.app.use('/.netlify/functions/api/gerador', geradorRoutes)
+        this.app.use('/.netlify/functions/api/materiais', materiaisRoutes)
+        this.app.use('/.netlify/functions/api/user', userRouter)
     }
 }
 
