@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "ts-node-dev --exit-child src/server.ts",
-    "start": "npx netlify-lambda serve ./src -c ./webpack.config.js",
-    "build": "npx netlify-lambda build ./src -c ./webpack.config.js"
+    "start": "npx netlify-lambda serve ./src -c ./webpack.config.netlify.js",
+    "build": "npx netlify-lambda build ./src -c ./webpack.config.netlify.js"
   },
   "keywords": [],
   "author": "",
