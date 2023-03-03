@@ -6,7 +6,7 @@
   "scripts": {
     "start": "ts-node-dev --exit-child src/server.ts",
     "build": "npx prisma generate",
-    "dev": "npx netlify dev"
+    "dev": "npx netlify-lambda build ./src -c ./webpack.config.netlify.js"
   },
   "keywords": [],
   "author": "",
