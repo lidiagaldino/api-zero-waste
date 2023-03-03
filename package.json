@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node-dev --exit-child src/server.ts"
+    "start": "ts-node-dev --exit-child src/server.ts",
+    "build": "npx prisma generate",
+    "dev": "npx netlify dev"
   },
   "keywords": [],
   "author": "",
@@ -22,6 +24,7 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
+    "netlify-cli": "12.2.9",
     "@types/bcryptjs": "^2.4.2",
     "@types/cors": "^2.8.13",
     "@types/express": "^4.17.17",

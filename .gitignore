@@ -1,1 +1,13 @@
-/node_modules
+
+node_modules
+yarn-error.log
+dist
+build
+.DS_Store
+examples
+tmp
+pnpm-debug.log
+sandbox
+*.tsbuildinfo
+.netlify
+.env*
