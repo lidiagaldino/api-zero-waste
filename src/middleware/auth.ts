@@ -16,7 +16,8 @@ export const auth = (req: Request, res: Response, next: NextFunction) => {
     }
 
 
-    const token = authorization.replace('Baerer', '').trim()
+    const [, token] = authorization.split(" ")
+    console.log(token);
 
     try {
         const data = jwt.verify(token, 'secret')

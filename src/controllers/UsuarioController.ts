@@ -32,6 +32,20 @@ class UsuarioControlelr {
 
     }
 
+    public async dados(req: Request, res: Response) {
+
+        const id = req.id_usuario
+
+        const user = await Usuario.getUserById(id)
+
+        if (!user) {
+            return res.status(StatusCodes.NOT_FOUND).json({ message: 'Not found' })
+        }
+
+        return res.status(StatusCodes.OK).json({ user })
+
+    }
+
 }
 
 export default new UsuarioControlelr()

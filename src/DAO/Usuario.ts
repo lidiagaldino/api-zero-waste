@@ -275,6 +275,38 @@ class Usuario {
 
     }
 
+    public async getUserById(value: string): Promise<boolean | any> {
+
+        const result = await prisma.usuario.findFirst({
+            where: {
+                id: value
+            },
+            include: {
+                catador: {
+                    include: {
+                        materiais_catador: {
+                            include: {
+                                material: true
+                            }
+                        }
+                    }
+                },
+                gerador: true,
+                pessoa_fisica: true,
+                pessoa_juridica: true,
+                endereco_usuario: {
+                    include: {
+                        endereco: true
+                    }
+                }
+            }
+        })
+
+        return (result != null ? result : false)
+
+    }
+
+
 }
 
 export default new Usuario()
