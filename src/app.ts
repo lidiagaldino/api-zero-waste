@@ -1,5 +1,5 @@
 import express from 'express'
-import cors from 'cors'
+import cors, { CorsOptions } from 'cors'
 import catadorRoutes from './routes/catadorRouter'
 import geradorRoutes from './routes/geradorRouter'
 import materiaisRoutes from './routes/materiaisRoutes'
@@ -15,8 +15,16 @@ class App {
         this.routes()
     }
 
+    private enableCors(){
+        const options: CorsOptions = {
+            methods: 'GET,PUT,POST,DELETE,PATCH',
+            origin: '*'
+        }
+        this.app.use(cors(options))
+    }
+
     private middleware() {
-        this.app.use(cors())
+        this.enableCors()
         this.app.use(express.json())
     }
 
