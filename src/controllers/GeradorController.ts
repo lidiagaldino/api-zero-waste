@@ -26,7 +26,7 @@ class GeradorController {
         if (body.cnpj) rs = await Usuario.newUserGeradorJud(body)
         else rs = await Usuario.newUserGerador(body)
 
-        return res.send(rs)
+        return (rs == false ? res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: 'Não foi possível criar' }) : res.status(StatusCodes.CREATED).json({ message: rs }))
     }
 }
 
