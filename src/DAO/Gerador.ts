@@ -1,5 +1,4 @@
-import { FavoritarCatador, PrismaClient } from "@prisma/client"
-import IGerador from "../interfaces/Gerador"
+import { PrismaClient } from "@prisma/client"
 const prisma = new PrismaClient()
 
 type Favoritar = {
