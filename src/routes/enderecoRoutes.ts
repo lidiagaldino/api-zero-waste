@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import EnderecoController from '../controllers/enderecoController'
+import EnderecoController from '../controllers/EnderecoController'
 import { enderecoBodyValidation } from '../schemas/EnderecoSchema'
 import { validation } from '../middleware/validation'
 
