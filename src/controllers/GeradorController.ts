@@ -5,6 +5,7 @@ import Usuario from '../DAO/Usuario'
 import Gerador from '../DAO/Gerador'
 
 import IGerador from '../interfaces/Gerador'
+import IFavoritar from '../interfaces/Favoritar'
 
 class GeradorController {
 
@@ -27,6 +28,14 @@ class GeradorController {
         else rs = await Usuario.newUserGerador(body)
 
         return (rs == false ? res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: 'Não foi possível criar' }) : res.status(StatusCodes.CREATED).json({ message: rs }))
+    }
+
+    public async favorite(req: Request<{}, {}, Omit<IFavoritar, 'id'>>, res: Response) {
+        const body = req.body
+
+        const rs = await Gerador.favorite(body.id_gerador, body.id_catador)
+
+        return (rs.action == 'DELETED' ? res.status(StatusCodes.OK).json(rs) : res.status(StatusCodes.CREATED).json(rs))
     }
 }
 

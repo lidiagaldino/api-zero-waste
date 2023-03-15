@@ -51,6 +51,7 @@ model Catador {
   user              Usuario            @relation(fields: [id_usuario], references: [id])
   id_usuario        String
   materiais_catador MateriaisCatador[]
+  FavoritarCatador  FavoritarCatador[]
 }
 
 model Materiais {
@@ -87,7 +88,16 @@ model EnderecoUsuario {
 }
 
 model Gerador {
+  id               String             @id @default(uuid())
+  user             Usuario            @relation(fields: [id_usuario], references: [id])
+  id_usuario       String
+  FavoritarCatador FavoritarCatador[]
+}
+
+model FavoritarCatador {
   id         String  @id @default(uuid())
-  user       Usuario @relation(fields: [id_usuario], references: [id])
-  id_usuario String
+  catador    Catador @relation(fields: [id_catador], references: [id])
+  id_catador String
+  gerador    Gerador @relation(fields: [id_gerador], references: [id])
+  id_gerador String
 }
