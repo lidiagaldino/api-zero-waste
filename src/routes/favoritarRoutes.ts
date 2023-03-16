@@ -6,7 +6,7 @@ import { auth } from "../middleware/auth";
 
 const routes = Router()
 
-routes.get('/', auth, FavoritarController.index)
+routes.get('/:id', auth, FavoritarController.index)
 routes.patch('/', validation({ body: favoritarBodyValidation }), auth, FavoritarController.toggle)
 
 export default routes
