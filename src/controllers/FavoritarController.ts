@@ -16,7 +16,7 @@ class FavoritarController{
     public async index(req: Request, res: Response){
         const id = req.params.id
 
-        const rs = await Favoritar.getAll(id)
+        const rs = await Favoritar.getAll(id.toString())
 
         return (rs.length > 0 ? res.status(StatusCodes.OK).json(rs) : res.status(StatusCodes.NOT_FOUND).json({}))
     }
