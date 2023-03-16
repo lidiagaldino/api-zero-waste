@@ -10,6 +10,5 @@ const routes = Router()
 
 routes.get('/', GeradorController.index)
 routes.post('/', validation({ body: geradorBodyValidation }), verify, GeradorController.store)
-routes.patch('/favoritar', validation({ body: favoritarBodyValidation }), auth, GeradorController.favorite)
 
 export default routes

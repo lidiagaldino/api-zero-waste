@@ -5,6 +5,7 @@ import geradorRoutes from './routes/geradorRouter'
 import materiaisRoutes from './routes/materiaisRoutes'
 import userRouter from './routes/userRouter'
 import enderecoRoutes from './routes/enderecoRoutes'
+import favoritarRoutes from './routes/favoritarRoutes'
 
 class App {
     public app: express.Application
@@ -35,6 +36,8 @@ class App {
         this.app.use('/materiais', materiaisRoutes)
         this.app.use('/user', userRouter)
         this.app.use('/endereco', enderecoRoutes)
+        this.app.use('/favoritar', favoritarRoutes)
+
     }
 }
 
