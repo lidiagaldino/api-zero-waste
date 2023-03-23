@@ -3,10 +3,18 @@ import IFavoritar from '../interfaces/Favoritar'
 import { Request, Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import Favoritar from '../DAO/Favoritar'
+import Catador from '../DAO/Catador'
+import Gerador from '../DAO/Gerador'
 
 class FavoritarController{
     public async toggle(req: Request<{}, {}, Omit<IFavoritar, 'id'>>, res: Response){
         const body = req.body
+
+        const catadorExists = await Catador.getById(body.id_catador)
+        if (!catadorExists) return res.status(StatusCodes.NOT_FOUND).json({message: 'Catador não existe'})
+
+        const geradorExists = await Gerador.getById(body.id_gerador)
+        if (!geradorExists) return res.status(StatusCodes.NOT_FOUND).json({message: 'Gerador não existe'})
 
         const rs = await Favoritar.favorite(body.id_gerador, body.id_catador)
 

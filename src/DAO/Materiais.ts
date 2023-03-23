@@ -7,6 +7,19 @@ class Materiais {
 
         return rs
     }
+
+    public async getByCatador(id: string): Promise<any>{
+        const rs = await prisma.materiaisCatador.findMany({
+            where: {
+                id_catador: id
+            },
+            include: {
+                material: true
+            }
+        })
+
+        return rs
+    }
 }
 
 export default new Materiais()

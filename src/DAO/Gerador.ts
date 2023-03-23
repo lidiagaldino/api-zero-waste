@@ -24,6 +24,16 @@ class Gerador {
 
         return (rs.length > 0 ? rs : false)
     }
+
+    public async getById(id: string): Promise<any> {
+        const rs = await prisma.gerador.findUnique({
+            where: {
+                id
+            }
+        })
+
+        return (rs.id ? rs : false)
+    }
 }
 
 export default new Gerador()

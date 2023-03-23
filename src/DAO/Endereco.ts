@@ -31,6 +31,20 @@ class Endereco {
             return false
         }
     }
+
+    public async findByUser(id: string): Promise<any> {
+
+        const rs = await prisma.enderecoUsuario.findMany({
+            where: {
+                id_usuario: id
+            },
+            include: {
+                endereco: true
+            }
+        })
+
+        return (rs.length > 0 ? rs : false)
+    }
 }
 
 export default new Endereco()

@@ -6,5 +6,6 @@ import { validation } from '../middleware/validation'
 const routes = Router()
 
 routes.post('/', validation({ body: enderecoBodyValidation }), EnderecoController.store)
+routes.get('/:id', EnderecoController.getByUser)
 
 export default routes

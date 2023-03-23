@@ -10,6 +10,14 @@ class EnderecoController {
 
         return (rs == false ? res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: 'Não foi possível criar' }) : res.status(StatusCodes.CREATED).json({ message: rs }))
     }
+
+    public async getByUser(req: Request, res: Response){
+        const { id } = req.params
+
+        const rs = await Endereco.findByUser(id)
+
+        return (rs == false ? res.status(StatusCodes.NOT_FOUND).json({message: 'NOT FOUND'}) : res.status(StatusCodes.OK).json(rs))
+    }
 }
 
 export default new EnderecoController()

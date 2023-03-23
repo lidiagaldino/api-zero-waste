@@ -14,7 +14,12 @@ class Catador {
                             }
                         },
                         pessoa_fisica: true,
-                        pessoa_juridica: true
+                        pessoa_juridica: true,
+                    }
+                },
+                materiais_catador: {
+                    include: {
+                        material: true
                     }
                 }
             }
@@ -22,6 +27,16 @@ class Catador {
 
 
         return (rs.length > 0 ? rs : false)
+    }
+
+    public async getById(id: string): Promise<any> {
+        const rs = await prisma.catador.findUnique({
+            where: {
+                id
+            }
+        })
+
+        return (rs.id ? rs : false)
     }
 }
 
