@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client"
 const prisma = new PrismaClient()
 
+
 class Catador {
 
     public async getAll(): Promise<any> {

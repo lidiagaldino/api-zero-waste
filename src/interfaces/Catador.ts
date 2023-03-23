@@ -1,5 +1,5 @@
 export default interface ICatador {
-    id: number,
+    id: string,
     nome: string,
     endereco: {
         cep: string,
