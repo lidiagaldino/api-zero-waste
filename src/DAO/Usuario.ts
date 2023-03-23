@@ -69,10 +69,13 @@ class Usuario {
                     })
                 })
 
-                console.log(teste);
+                const newUser = {
+                    id: result.id,
+                    usuario
+                }
 
 
-                return (result ? result : false)
+                return (result ? newUser : false)
             }
 
         } catch (error) {
@@ -141,8 +144,13 @@ class Usuario {
 
                 console.log(teste);
 
+                const newUser = {
+                    id: result.id,
+                    usuario
+                }
 
-                return (result ? result : false)
+
+                return (result ? newUser : false)
             }
 
         } catch (error) {
@@ -189,7 +197,13 @@ class Usuario {
                     }
                 })
 
-                return (result ? result : false)
+                const newUser = {
+                    id: result.id,
+                    usuario
+                }
+
+
+                return (result ? newUser : false)
             }
 
 
@@ -235,7 +249,13 @@ class Usuario {
                     }
                 })
 
-                return (result ? result : false)
+                const newUser = {
+                    id: result.id,
+                    usuario
+                }
+
+
+                return (result ? newUser : false)
             }
 
         } catch (error) {

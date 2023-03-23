@@ -26,7 +26,7 @@ class CatadorController {
         if (body.cnpj) rs = await Usuario.newUserCatadorJud(body)
         else rs = await Usuario.newUserCatador(body)
 
-        return (rs == false ? res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: 'Não foi possível criar' }) : res.status(StatusCodes.CREATED).json({ message: rs }))
+        return (rs == false ? res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: 'Não foi possível criar' }) : res.status(StatusCodes.CREATED).json(rs))
     }
 }
 
