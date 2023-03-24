@@ -71,7 +71,21 @@ class Usuario {
 
                 const newUser = {
                     id: result.id,
-                    usuario
+                    nome: usuario.nome,
+                    endereco: {
+                        cep: usuario.endereco.cep,
+                        logradouro: usuario.endereco.logradouro,
+                        bairro: usuario.endereco.bairro,
+                        cidade: usuario.endereco.cidade,
+                        estado: usuario.endereco.estado,
+                        complemento: usuario.endereco.estado
+                    },
+                    telefone: usuario.telefone,
+                    email: usuario.email,
+                    senha: result.senha,
+                    materiais: usuario.materiais,
+                    cpf: usuario.cpf,
+                    data_nascimento: usuario.data_nascimento
                 }
 
 
@@ -146,7 +160,21 @@ class Usuario {
 
                 const newUser = {
                     id: result.id,
-                    usuario
+                    nome: usuario.nome,
+                    endereco: {
+                        cep: usuario.endereco.cep,
+                        logradouro: usuario.endereco.logradouro,
+                        bairro: usuario.endereco.bairro,
+                        cidade: usuario.endereco.cidade,
+                        estado: usuario.endereco.estado,
+                        complemento: usuario.endereco.estado
+                    },
+                    telefone: usuario.telefone,
+                    email: usuario.email,
+                    senha: result.senha,
+                    materiais: usuario.materiais,
+                    cnpj: usuario.cnpj,
+                    data_nascimento: usuario.data_nascimento
                 }
 
 
@@ -199,7 +227,20 @@ class Usuario {
 
                 const newUser = {
                     id: result.id,
-                    usuario
+                    nome: usuario.nome,
+                    endereco: {
+                        cep: usuario.endereco.cep,
+                        logradouro: usuario.endereco.logradouro,
+                        bairro: usuario.endereco.bairro,
+                        cidade: usuario.endereco.cidade,
+                        estado: usuario.endereco.estado,
+                        complemento: usuario.endereco.estado
+                    },
+                    telefone: usuario.telefone,
+                    email: usuario.email,
+                    senha: result.senha,
+                    cpf: usuario.cpf,
+                    data_nascimento: usuario.data_nascimento
                 }
 
 
@@ -251,7 +292,20 @@ class Usuario {
 
                 const newUser = {
                     id: result.id,
-                    usuario
+                    nome: usuario.nome,
+                    endereco: {
+                        cep: usuario.endereco.cep,
+                        logradouro: usuario.endereco.logradouro,
+                        bairro: usuario.endereco.bairro,
+                        cidade: usuario.endereco.cidade,
+                        estado: usuario.endereco.estado,
+                        complemento: usuario.endereco.estado
+                    },
+                    telefone: usuario.telefone,
+                    email: usuario.email,
+                    senha: result.senha,
+                    cnpj: usuario.cnpj,
+                    data_nascimento: usuario.data_nascimento
                 }
 
 
