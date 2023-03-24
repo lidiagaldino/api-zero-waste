@@ -4,6 +4,8 @@ import { StatusCodes } from 'http-status-codes'
 import Usuario from '../DAO/Usuario'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
+import IUsuario from '../interfaces/Usuario'
+import IParams from '../interfaces/Params'
 
 
 class UsuarioControlelr {
@@ -44,6 +46,15 @@ class UsuarioControlelr {
 
         return res.status(StatusCodes.OK).json({ user })
 
+    }
+
+    public async update(req: Request, res: Response){
+        const body = req.body
+        const {id_usuario} = req.params
+
+        const rs = await Usuario.updateUser(id_usuario, body)
+
+        return (rs ? res.status(StatusCodes.OK).json(rs) : res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({message: 'Algo deu errado'}))
     }
 
 }

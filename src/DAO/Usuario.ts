@@ -5,6 +5,7 @@ import bcrypt from 'bcryptjs'
 
 import ICatador from "../interfaces/Catador"
 import IGerador from "../interfaces/Gerador"
+import IUsuario from "../interfaces/Usuario"
 
 
 class Usuario {
@@ -380,7 +381,71 @@ class Usuario {
 
     }
 
+    public async updateUser(id: string, user: Omit<IUsuario, 'id'>): Promise<any>{
+        try {
 
+            const rs = await prisma.usuario.update({
+                where: {
+                    id,
+                },
+                data: {
+                    email: user.email,
+                    senha: bcrypt.hashSync(user.senha),
+                    telefone: user.telefone,
+                }
+            })
+
+            let retorno: any
+
+            let fisico_juridico: any
+
+            if (user.cnpj) {
+                fisico_juridico = await prisma.pessoaJuridica.updateMany({
+                    where: {
+                        id_usuario: id
+                    },
+                    data: {
+                        cnpj: user.cnpj,
+                        nome_fantasia: user.nome
+                    }
+                })
+
+                retorno = {
+                    email: user.email,
+                    nome_fantasia: user.nome,
+                    telefone: user.telefone,
+                    senha: user.senha,
+                    cnpj: user.cnpj
+                }
+    
+            } else{
+                fisico_juridico = await prisma.pessoaFisica.updateMany({
+                    where: {
+                        id_usuario: id
+                    },
+                    data: {
+                        cpf: user.cnpj,
+                        nome: user.nome
+                    }
+                })
+
+                retorno = {
+                    email: user.email,
+                    nome: user.nome,
+                    telefone: user.telefone,
+                    senha: user.senha,
+                    cpf: user.cpf
+                }
+            }
+
+        
+
+            return (fisico_juridico && rs ? retorno : false)
+            
+        } catch (error) {
+            return false
+        }
+    }
 }
 
 export default new Usuario()

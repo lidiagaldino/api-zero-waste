@@ -3,6 +3,7 @@ import CatadorController from '../controllers/CatadorController'
 import { catadorBodyValidation } from '../schemas/catadorSchema'
 import { verify } from '../middleware/verify'
 import { validation } from '../middleware/validation'
+import { auth } from '../middleware/auth'
 
 const routes = Router()
 

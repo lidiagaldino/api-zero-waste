@@ -23,6 +23,30 @@ class MateriaisController {
         return (materiais.length > 0 ? res.status(StatusCodes.OK).json(materiais) : res.status(StatusCodes.NOT_FOUND).json({message: 'NOT FOUND'}))
     }
 
+    public async storeCatador(req: Request, res: Response){
+        const {id_catador, id_material} = req.params
+
+        const result = await Materiais.newMaterialCatador(id_catador, id_material)
+        
+        return (result ? res.status(StatusCodes.CREATED).json(result) : res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({message: 'Algo deu errado'}))
+    }
+
+    public async delete(req: Request, res: Response){
+        const {id_catador, id_material} = req.params
+
+        const materiais = await Materiais.getByCatador(id_catador)
+
+        if (materiais.length > 1) {
+            const rs = await Materiais.deleteMateriaisCatador(id_catador, id_material)
+
+            return (rs ? res.status(StatusCodes.NO_CONTENT).json(rs) : res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({message: 'Algo deu errado'}))
+        } else{
+            return res.status(StatusCodes.BAD_REQUEST).json({message: 'Catador deve ter no minimo um material cadastrado'})
+        }
+
+        
+    }
+
 }
 
 export default new MateriaisController()

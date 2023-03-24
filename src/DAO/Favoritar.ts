@@ -8,11 +8,6 @@ type Favorito = {
     action?: 'CREATED' | 'DELETED'
 }
 
-type List = {
-
-}
-
-
 class Favoritar{
     public async favorite(id_gerador: string, id_catador: string): Promise<Favorito> {
         const find = await prisma.favoritarCatador.findFirst({

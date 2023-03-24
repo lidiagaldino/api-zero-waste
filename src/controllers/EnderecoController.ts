@@ -18,6 +18,15 @@ class EnderecoController {
 
         return (rs == false ? res.status(StatusCodes.NOT_FOUND).json({message: 'NOT FOUND'}) : res.status(StatusCodes.OK).json(rs))
     }
+
+    public async delete(req: Request, res: Response){
+        const {id_endereco, id_usuario} = req.params
+
+        const result = await Endereco.delete(id_endereco, id_usuario)
+        console.log(result);
+
+        return (result ? res.status(StatusCodes.NO_CONTENT).json({message: 'Deletado'}) : res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({message: 'Algo deu errado'}))
+    }
 }
 
 export default new EnderecoController()

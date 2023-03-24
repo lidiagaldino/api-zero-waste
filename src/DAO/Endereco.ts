@@ -45,6 +45,31 @@ class Endereco {
 
         return (rs.length > 0 ? rs : false)
     }
+
+    public async delete(id_endereco: string, id_usuario: string): Promise<any>{
+
+        try {
+            await prisma.enderecoUsuario.deleteMany({
+                where: {
+                    id_endereco: id_endereco,
+                    id_usuario: id_usuario
+                }
+            })
+
+            await prisma.endereco.deleteMany({
+                where: {
+                    id: id_endereco
+                }
+            })
+
+            return true
+
+
+        } catch (error) {
+            return false
+        }
+        
+    }
 }
 
 export default new Endereco()

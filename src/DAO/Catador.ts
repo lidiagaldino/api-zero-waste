@@ -31,13 +31,19 @@ class Catador {
     }
 
     public async getById(id: string): Promise<any> {
-        const rs = await prisma.catador.findUnique({
-            where: {
-                id
-            }
-        })
 
-        return (rs.id ? rs : false)
+        try {
+            const rs = await prisma.catador.findUnique({
+                where: {
+                    id
+                }
+            })
+    
+            return (rs.id ? rs : false)
+        } catch (error) {
+            return false
+        }
+        
     }
 }
 
