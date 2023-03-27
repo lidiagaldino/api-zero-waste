@@ -8,5 +8,6 @@ const routes = Router()
 
 routes.get('/', GeradorController.index)
 routes.post('/', validation({ body: geradorBodyValidation }), verify, GeradorController.store)
+routes.post('/teste', GeradorController.nearCatadores)
 
 export default routes

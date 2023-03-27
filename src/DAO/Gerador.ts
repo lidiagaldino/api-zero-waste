@@ -34,6 +34,28 @@ class Gerador {
 
         return (rs.id ? rs : false)
     }
+
+    public async getNearCatadores(lat: string, long: string): Promise<any>{
+        try {
+
+            const sql = `
+            SELECT id, latitude, longitude,
+ST_DISTANCE_SPHERE(POINT(${lat}, ${long}), POINT(latitude, longitude)) AS distance
+FROM Endereco
+WHERE ST_DISTANCE_SPHERE(POINT(${lat}, ${long}), POINT(latitude, longitude)) <= 10000
+ORDER BY distance
+LIMIT 10;
+            `
+
+            console.log(sql);
+            const rs = await prisma.$queryRawUnsafe(sql)
+
+            return rs
+        } catch (error) {
+            console.log(error);
+            return false
+        }
+    }
 }
 
 export default new Gerador()

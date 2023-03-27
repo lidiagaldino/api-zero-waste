@@ -29,6 +29,14 @@ class GeradorController {
         return (rs == false ? res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: 'Não foi possível criar' }) : res.status(StatusCodes.CREATED).json(rs))
     }
 
+    public async nearCatadores(req: Request, res: Response){
+        const body = req.body
+
+        const rs = await Gerador.getNearCatadores(body.lat, body.long)
+
+        return res.send(rs)
+    }
+
 }
 
 export default new GeradorController()
