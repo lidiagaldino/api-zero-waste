@@ -5,5 +5,7 @@ export default interface IUsuario {
     email: string,
     senha: string,
     cpf?: string,
-    cnpj?: string
+    cnpj?: string,
+    foto: string,
+    biografia: string
 }

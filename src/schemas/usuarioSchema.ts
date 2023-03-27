@@ -19,4 +19,6 @@ export const usuarioBodyValidation: yup.SchemaOf<IBodyProps> = yup.object().shap
         if (!cnpj) return value != null
         return true
     }),
+    foto: yup.string().url().required(),
+    biografia: yup.string().required()
 })

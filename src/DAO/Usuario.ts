@@ -414,7 +414,9 @@ class Usuario {
                 data: {
                     email: user.email,
                     senha: bcrypt.hashSync(user.senha),
-                    telefone: user.telefone
+                    telefone: user.telefone,
+                    biografia: user.biografia,
+                    foto: user.foto
                 }
             })
 
