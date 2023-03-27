@@ -251,7 +251,7 @@ class Usuario {
                         bairro: usuario.endereco.bairro,
                         cidade: usuario.endereco.cidade,
                         estado: usuario.endereco.estado,
-                        complemento: usuario.endereco.estado,
+                        complemento: usuario.endereco.complemento,
                         numero: usuario.endereco.numero
                     },
                     telefone: usuario.telefone,
