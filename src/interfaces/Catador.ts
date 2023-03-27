@@ -7,7 +7,8 @@ export default interface ICatador {
         bairro: string,
         cidade: string,
         estado: string,
-        complemento: string | null
+        complemento: string | null,
+        numero: string
     },
     telefone: string,
     email: string,

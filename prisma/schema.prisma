@@ -16,6 +16,8 @@ model Usuario {
   email            String
   senha            String
   telefone         String
+  foto             String
+  biografia        String?
   pessoa_fisica    PessoaFisica[]
   pessoa_juridica  PessoaJuridica[]
   catador          Catador[]
@@ -76,6 +78,10 @@ model Endereco {
   estado           String
   cep              String
   complemento      String?
+  latitude         String
+  longitude        String
+  apelido          String
+  numero           String
   endereco_usuario EnderecoUsuario[]
 }
 

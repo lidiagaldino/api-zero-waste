@@ -8,6 +8,8 @@ const routes = Router()
 
 routes.post('/auth', UsuarioController.auth)
 routes.get('/', auth, UsuarioController.dados)
-routes.put('/:id_usuario', auth, validation({ body: usuarioBodyValidation }), UsuarioController.update)
+routes.put('/', auth, validation({ body: usuarioBodyValidation }), UsuarioController.update)
+routes.patch('/bio', auth, UsuarioController.updateBio)
+routes.patch('/photo', auth, UsuarioController.updatePhoto)
 
 export default routes

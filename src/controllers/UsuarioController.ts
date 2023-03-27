@@ -50,9 +50,27 @@ class UsuarioControlelr {
 
     public async update(req: Request, res: Response){
         const body = req.body
-        const {id_usuario} = req.params
+        const {id_usuario} = req
 
         const rs = await Usuario.updateUser(id_usuario, body)
+
+        return (rs ? res.status(StatusCodes.OK).json(rs) : res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({message: 'Algo deu errado'}))
+    }
+
+    public async updatePhoto(req: Request, res: Response){
+        const body = req.body
+        const {id_usuario} = req
+
+        const rs = await Usuario.updatePhoto(id_usuario, body.url)
+
+        return (rs ? res.status(StatusCodes.OK).json(rs) : res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({message: 'Algo deu errado'}))
+    }
+
+    public async updateBio(req: Request, res: Response){
+        const body = req.body
+        const {id_usuario} = req
+
+        const rs = await Usuario.updateBio(id_usuario, body.bio)
 
         return (rs ? res.status(StatusCodes.OK).json(rs) : res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({message: 'Algo deu errado'}))
     }

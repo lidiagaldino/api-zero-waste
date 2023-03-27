@@ -10,7 +10,7 @@ import IUsuario from "../interfaces/Usuario"
 
 class Usuario {
 
-    public async newUserCatador(usuario: Omit<ICatador, 'id'>): Promise<Usuario | any> {
+    public async newUserCatador(usuario: Omit<ICatador, 'id'>): Promise<any> {
 
         try {
 
@@ -20,9 +20,9 @@ class Usuario {
                         email: usuario.email,
                         telefone: usuario.telefone,
                         senha: bcrypt.hashSync(usuario.senha, 8),
+                        foto: 'https://cdn-icons-png.flaticon.com/512/3231/3231671.png',
                         catador: {
                             create: {}
-
                         },
                         endereco_usuario: {
                             create: {
@@ -33,7 +33,11 @@ class Usuario {
                                         cidade: usuario.endereco.cidade,
                                         estado: usuario.endereco.estado,
                                         logradouro: usuario.endereco.logradouro,
-                                        complemento: usuario.endereco.complemento
+                                        complemento: usuario.endereco.complemento,
+                                        apelido: 'Principal',
+                                        latitude: '-23.498104',
+                                        longitude: '-46.883027',
+                                        numero: usuario.endereco.numero
                                     }
                                 }
                             }
@@ -79,7 +83,8 @@ class Usuario {
                         bairro: usuario.endereco.bairro,
                         cidade: usuario.endereco.cidade,
                         estado: usuario.endereco.estado,
-                        complemento: usuario.endereco.estado
+                        complemento: usuario.endereco.estado,
+                        numero: usuario.endereco.numero
                     },
                     telefone: usuario.telefone,
                     email: usuario.email,
@@ -108,6 +113,7 @@ class Usuario {
                         email: usuario.email,
                         telefone: usuario.telefone,
                         senha: bcrypt.hashSync(usuario.senha, 8),
+                        foto: 'https://cdn-icons-png.flaticon.com/512/3231/3231671.png',
                         catador: {
                             create: {}
 
@@ -121,7 +127,11 @@ class Usuario {
                                         cidade: usuario.endereco.cidade,
                                         estado: usuario.endereco.estado,
                                         logradouro: usuario.endereco.logradouro,
-                                        complemento: usuario.endereco.complemento
+                                        complemento: usuario.endereco.complemento,
+                                        apelido: 'Principal',
+                                        latitude: '-23.498104',
+                                        longitude: '-46.883027',
+                                        numero: usuario.endereco.numero
                                     }
                                 }
                             }
@@ -168,7 +178,8 @@ class Usuario {
                         bairro: usuario.endereco.bairro,
                         cidade: usuario.endereco.cidade,
                         estado: usuario.endereco.estado,
-                        complemento: usuario.endereco.estado
+                        complemento: usuario.endereco.estado,
+                        numero: usuario.endereco.numero
                     },
                     telefone: usuario.telefone,
                     email: usuario.email,
@@ -198,6 +209,7 @@ class Usuario {
                         email: usuario.email,
                         telefone: usuario.telefone,
                         senha: bcrypt.hashSync(usuario.senha),
+                        foto: 'https://cdn-icons-png.flaticon.com/512/3231/3231671.png',
                         endereco_usuario: {
                             create: {
                                 endereco: {
@@ -207,7 +219,11 @@ class Usuario {
                                         cidade: usuario.endereco.cidade,
                                         estado: usuario.endereco.estado,
                                         logradouro: usuario.endereco.logradouro,
-                                        complemento: usuario.endereco.complemento
+                                        complemento: usuario.endereco.complemento,
+                                        apelido: 'Principal',
+                                        latitude: '-23.498104',
+                                        longitude: '-46.883027',
+                                        numero: usuario.endereco.numero
                                     }
                                 }
                             }
@@ -235,7 +251,8 @@ class Usuario {
                         bairro: usuario.endereco.bairro,
                         cidade: usuario.endereco.cidade,
                         estado: usuario.endereco.estado,
-                        complemento: usuario.endereco.estado
+                        complemento: usuario.endereco.estado,
+                        numero: usuario.endereco.numero
                     },
                     telefone: usuario.telefone,
                     email: usuario.email,
@@ -264,6 +281,7 @@ class Usuario {
                         email: usuario.email,
                         telefone: usuario.telefone,
                         senha: bcrypt.hashSync(usuario.senha),
+                        foto: 'https://cdn-icons-png.flaticon.com/512/3231/3231671.png',
                         endereco_usuario: {
                             create: {
                                 endereco: {
@@ -273,7 +291,11 @@ class Usuario {
                                         cidade: usuario.endereco.cidade,
                                         estado: usuario.endereco.estado,
                                         logradouro: usuario.endereco.logradouro,
-                                        complemento: usuario.endereco.complemento
+                                        complemento: usuario.endereco.complemento,
+                                        apelido: 'Principal',
+                                        latitude: '-23.498104',
+                                        longitude: '-46.883027',
+                                        numero: usuario.endereco.numero
                                     }
                                 }
                             }
@@ -300,7 +322,8 @@ class Usuario {
                         bairro: usuario.endereco.bairro,
                         cidade: usuario.endereco.cidade,
                         estado: usuario.endereco.estado,
-                        complemento: usuario.endereco.estado
+                        complemento: usuario.endereco.estado,
+                        numero: usuario.endereco.numero
                     },
                     telefone: usuario.telefone,
                     email: usuario.email,
@@ -391,7 +414,7 @@ class Usuario {
                 data: {
                     email: user.email,
                     senha: bcrypt.hashSync(user.senha),
-                    telefone: user.telefone,
+                    telefone: user.telefone
                 }
             })
 
@@ -446,6 +469,41 @@ class Usuario {
             return false
         }
     }
+
+    public async updateBio(id: string, bio: string): Promise<any>{
+        try {
+            const rs = await prisma.usuario.update({
+                where: {
+                    id: id
+                },
+                data: {
+                    biografia: bio
+                }
+            })
+
+            return (rs ? bio : false)
+
+        } catch (error) {
+            return false
+        }
+    }
+
+    public async updatePhoto(id: string, url: string): Promise<any>{
+        try {
+            const rs = await prisma.usuario.update({
+                where: {
+                    id: id
+                },
+                data: {
+                    foto: url
+                }
+            })
+
+            return (rs ? url : false)
+        } catch (error) {
+            return false
+        }
+    } 
 }
 
 export default new Usuario()

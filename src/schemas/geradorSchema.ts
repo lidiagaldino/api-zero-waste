@@ -11,7 +11,8 @@ export const geradorBodyValidation: yup.SchemaOf<IBodyProps> = yup.object().shap
         bairro: yup.string().required(),
         cidade: yup.string().required(),
         estado: yup.string().required(),
-        complemento: yup.string().nullable().required()
+        complemento: yup.string().nullable().required(),
+        numero: yup.string().required()
     }),
     telefone: yup.string().required().min(14),
     email: yup.string().email().required(),

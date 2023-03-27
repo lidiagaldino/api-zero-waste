@@ -13,6 +13,10 @@ class Endereco {
                     estado: endereco.estado,
                     logradouro: endereco.logradouro,
                     complemento: endereco.complemento,
+                    latitude: '-23.498104',
+                    longitude: '-46.883027',
+                    apelido: endereco.apelido,
+                    numero: endereco.numero                
                 }
             })
 

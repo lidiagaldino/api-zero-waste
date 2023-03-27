@@ -7,4 +7,6 @@ export default interface IEndereco {
     cidade: string,
     estado: string,
     complemento: string | null
+    apelido: string,
+    numero: string
 }
