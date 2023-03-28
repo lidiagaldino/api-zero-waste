@@ -35,19 +35,28 @@ class Gerador {
         return (rs.id ? rs : false)
     }
 
-    public async getNearCatadores(lat: string, long: string): Promise<any>{
+    public async getNearCatadores(id_endereco: string): Promise<any> {
         try {
 
+            const getLatLong = await prisma.endereco.findUnique({
+                where: {
+                    id: id_endereco
+                },
+            })
+
             const sql = `
-            SELECT id, latitude, longitude,
-ST_DISTANCE_SPHERE(POINT(${lat}, ${long}), POINT(latitude, longitude)) AS distance
-FROM Endereco
-WHERE ST_DISTANCE_SPHERE(POINT(${lat}, ${long}), POINT(latitude, longitude)) <= 10000
-ORDER BY distance
-LIMIT 10;
+            SELECT latitude, longitude, tbl_usuario.email , ST_DISTANCE_SPHERE(POINT(${getLatLong.latitude}, ${getLatLong.longitude}), POINT(latitude, longitude)) AS distance
+                FROM Endereco
+                INNER JOIN EnderecoUsuario
+                    ON EnderecoUsuario.id_endereco = Endereco.id
+                INNER JOIN tbl_usuario
+                    ON tbl_usuario.id = EnderecoUsuario.id_usuario
+                INNER JOIN Catador
+                    ON Catador.id_usuario = tbl_usuario.id
+                ORDER BY distance
+            LIMIT 10;
             `
 
-            console.log(sql);
             const rs = await prisma.$queryRawUnsafe(sql)
 
             return rs

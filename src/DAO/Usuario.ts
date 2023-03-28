@@ -404,7 +404,7 @@ class Usuario {
 
     }
 
-    public async updateUser(id: string, user: Omit<IUsuario, 'id'>): Promise<any>{
+    public async updateUser(id: string, user: Omit<IUsuario, 'id'>): Promise<any> {
         try {
 
             const rs = await prisma.usuario.update({
@@ -440,10 +440,11 @@ class Usuario {
                     nome_fantasia: user.nome,
                     telefone: user.telefone,
                     senha: user.senha,
-                    cnpj: user.cnpj
+                    cnpj: user.cnpj,
+                    foto: user.foto
                 }
-    
-            } else{
+
+            } else {
                 fisico_juridico = await prisma.pessoaFisica.updateMany({
                     where: {
                         id_usuario: id
@@ -459,20 +460,21 @@ class Usuario {
                     nome: user.nome,
                     telefone: user.telefone,
                     senha: user.senha,
-                    cpf: user.cpf
+                    cpf: user.cpf,
+                    foto: user.foto
                 }
             }
 
-        
+
 
             return (fisico_juridico && rs ? retorno : false)
-            
+
         } catch (error) {
             return false
         }
     }
 
-    public async updateBio(id: string, bio: string): Promise<any>{
+    public async updateBio(id: string, bio: string): Promise<any> {
         try {
             const rs = await prisma.usuario.update({
                 where: {
@@ -490,7 +492,7 @@ class Usuario {
         }
     }
 
-    public async updatePhoto(id: string, url: string): Promise<any>{
+    public async updatePhoto(id: string, url: string): Promise<any> {
         try {
             const rs = await prisma.usuario.update({
                 where: {
@@ -505,7 +507,7 @@ class Usuario {
         } catch (error) {
             return false
         }
-    } 
+    }
 }
 
 export default new Usuario()
