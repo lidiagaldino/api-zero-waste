@@ -45,14 +45,19 @@ class Gerador {
             })
 
             const sql = `
-            SELECT latitude, longitude, tbl_usuario.email , ST_DISTANCE_SPHERE(POINT(${getLatLong.latitude}, ${getLatLong.longitude}), POINT(latitude, longitude)) AS distance
+            SELECT logradouro, cidade, numero, tbl_usuario.foto, tbl_pessoa_fisica.nome, PessoaJuridica.nome_fantasia, ST_DISTANCE_SPHERE(POINT(${getLatLong.latitude}, ${getLatLong.longitude}), POINT(latitude, longitude)) AS distance
                 FROM Endereco
                 INNER JOIN EnderecoUsuario
                     ON EnderecoUsuario.id_endereco = Endereco.id
                 INNER JOIN tbl_usuario
                     ON tbl_usuario.id = EnderecoUsuario.id_usuario
+                LEFT JOIN tbl_pessoa_fisica
+                    ON tbl_pessoa_fisica.id_usuario = tbl_usuario.id
+                LEFT JOIN PessoaJuridica
+                    ON PessoaJuridica.id_usuario = tbl_usuario.id
                 INNER JOIN Catador
                     ON Catador.id_usuario = tbl_usuario.id
+                WHERE ST_DISTANCE_SPHERE(POINT(${getLatLong.latitude}, ${getLatLong.longitude}), POINT(latitude, longitude)) <= 10000
                 ORDER BY distance
             LIMIT 10;
             `
