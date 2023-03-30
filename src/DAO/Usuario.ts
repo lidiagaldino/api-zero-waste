@@ -35,8 +35,8 @@ class Usuario {
                                         logradouro: usuario.endereco.logradouro,
                                         complemento: usuario.endereco.complemento,
                                         apelido: 'Principal',
-                                        latitude: '-23.498104',
-                                        longitude: '-46.883027',
+                                        latitude: usuario.endereco.latitude,
+                                        longitude: usuario.endereco.longitude,
                                         numero: usuario.endereco.numero
                                     }
                                 }
@@ -84,7 +84,9 @@ class Usuario {
                         cidade: usuario.endereco.cidade,
                         estado: usuario.endereco.estado,
                         complemento: usuario.endereco.estado,
-                        numero: usuario.endereco.numero
+                        numero: usuario.endereco.numero,
+                        latitude: usuario.endereco.latitude,
+                        longitude: usuario.endereco.longitude
                     },
                     telefone: usuario.telefone,
                     email: usuario.email,
@@ -129,8 +131,8 @@ class Usuario {
                                         logradouro: usuario.endereco.logradouro,
                                         complemento: usuario.endereco.complemento,
                                         apelido: 'Principal',
-                                        latitude: '-23.498104',
-                                        longitude: '-46.883027',
+                                        latitude: usuario.endereco.latitude,
+                                        longitude: usuario.endereco.longitude,
                                         numero: usuario.endereco.numero
                                     }
                                 }
@@ -179,7 +181,9 @@ class Usuario {
                         cidade: usuario.endereco.cidade,
                         estado: usuario.endereco.estado,
                         complemento: usuario.endereco.estado,
-                        numero: usuario.endereco.numero
+                        numero: usuario.endereco.numero,
+                        latitude: usuario.endereco.latitude,
+                        longitude: usuario.endereco.longitude
                     },
                     telefone: usuario.telefone,
                     email: usuario.email,
@@ -221,8 +225,8 @@ class Usuario {
                                         logradouro: usuario.endereco.logradouro,
                                         complemento: usuario.endereco.complemento,
                                         apelido: 'Principal',
-                                        latitude: '-23.498104',
-                                        longitude: '-46.883027',
+                                        latitude: usuario.endereco.latitude,
+                                        longitude: usuario.endereco.longitude,
                                         numero: usuario.endereco.numero
                                     }
                                 }
@@ -252,7 +256,9 @@ class Usuario {
                         cidade: usuario.endereco.cidade,
                         estado: usuario.endereco.estado,
                         complemento: usuario.endereco.complemento,
-                        numero: usuario.endereco.numero
+                        numero: usuario.endereco.numero,
+                        latitude: usuario.endereco.latitude,
+                        longitude: usuario.endereco.longitude
                     },
                     telefone: usuario.telefone,
                     email: usuario.email,
@@ -293,8 +299,8 @@ class Usuario {
                                         logradouro: usuario.endereco.logradouro,
                                         complemento: usuario.endereco.complemento,
                                         apelido: 'Principal',
-                                        latitude: '-23.498104',
-                                        longitude: '-46.883027',
+                                        latitude: usuario.endereco.latitude,
+                                        longitude: usuario.endereco.longitude,
                                         numero: usuario.endereco.numero
                                     }
                                 }
@@ -323,7 +329,9 @@ class Usuario {
                         cidade: usuario.endereco.cidade,
                         estado: usuario.endereco.estado,
                         complemento: usuario.endereco.estado,
-                        numero: usuario.endereco.numero
+                        numero: usuario.endereco.numero,
+                        latitude: usuario.endereco.latitude,
+                        longitude: usuario.endereco.longitude
                     },
                     telefone: usuario.telefone,
                     email: usuario.email,

@@ -12,7 +12,9 @@ export const catadorBodyValidation: yup.SchemaOf<IBodyProps> = yup.object().shap
         cidade: yup.string().required(),
         estado: yup.string().required(),
         complemento: yup.string().nullable().required(),
-        numero: yup.string().required()
+        numero: yup.string().required(),
+        latitude: yup.string().required(),
+        longitude: yup.string().required()
     }),
     telefone: yup.string().required().min(14),
     email: yup.string().email().required().min(10),

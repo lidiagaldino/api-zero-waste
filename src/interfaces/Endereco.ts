@@ -8,5 +8,7 @@ export default interface IEndereco {
     estado: string,
     complemento: string | null
     apelido: string,
-    numero: string
+    numero: string,
+    latitude: string,
+    longitude: string
 }

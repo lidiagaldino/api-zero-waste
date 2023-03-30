@@ -13,6 +13,8 @@ export const enderecoBodyValidation: yup.SchemaOf<IBodyProps> = yup.object().sha
     complemento: yup.string().nullable().required(),
     apelido: yup.string().min(3).required(),
     numero: yup.string().required(),
+    latitude: yup.string().required(),
+    longitude: yup.string().required(),
     id_usuario: yup.string().uuid()
 
 })
