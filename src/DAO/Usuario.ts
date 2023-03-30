@@ -21,6 +21,7 @@ class Usuario {
                         telefone: usuario.telefone,
                         senha: bcrypt.hashSync(usuario.senha, 8),
                         foto: 'https://cdn-icons-png.flaticon.com/512/3231/3231671.png',
+                        biografia: 'Eu amo recliclagem!!',
                         catador: {
                             create: {}
                         },
@@ -39,7 +40,7 @@ class Usuario {
                                         longitude: usuario.endereco.longitude,
                                         numero: usuario.endereco.numero
                                     }
-                                }
+                                },
                             }
                         },
                         pessoa_fisica: {
@@ -96,6 +97,8 @@ class Usuario {
                     data_nascimento: usuario.data_nascimento
                 }
 
+                console.log(result);
+
 
                 return (result ? newUser : false)
             }
@@ -116,12 +119,14 @@ class Usuario {
                         telefone: usuario.telefone,
                         senha: bcrypt.hashSync(usuario.senha, 8),
                         foto: 'https://cdn-icons-png.flaticon.com/512/3231/3231671.png',
+                        biografia: 'Eu amo recliclagem!!',
                         catador: {
                             create: {}
 
                         },
                         endereco_usuario: {
                             create: {
+                            
                                 endereco: {
                                     create: {
                                         bairro: usuario.endereco.bairro,
@@ -214,6 +219,7 @@ class Usuario {
                         telefone: usuario.telefone,
                         senha: bcrypt.hashSync(usuario.senha),
                         foto: 'https://cdn-icons-png.flaticon.com/512/3231/3231671.png',
+                        biografia: 'Eu amo recliclagem!!',
                         endereco_usuario: {
                             create: {
                                 endereco: {
@@ -267,7 +273,7 @@ class Usuario {
                     data_nascimento: usuario.data_nascimento
                 }
 
-
+                console.log(result);
                 return (result ? newUser : false)
             }
 
@@ -288,6 +294,7 @@ class Usuario {
                         telefone: usuario.telefone,
                         senha: bcrypt.hashSync(usuario.senha),
                         foto: 'https://cdn-icons-png.flaticon.com/512/3231/3231671.png',
+                        biografia: 'Eu amo recliclagem!!',
                         endereco_usuario: {
                             create: {
                                 endereco: {
