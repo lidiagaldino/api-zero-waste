@@ -2,6 +2,8 @@ import { Request, Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 
 import Materiais from '../DAO/Materiais'
+import IEndereco from '../interfaces/Endereco'
+import IMateriais from '../interfaces/Materiais'
 
 
 class MateriaisController {
@@ -15,6 +17,12 @@ class MateriaisController {
         return res.status(StatusCodes.NOT_FOUND).json({ message: 'Not found' })
     }
 
+    public async store(req: Request, res: Response){
+        const material = await Materiais.newMaterial(req.body.nome)
+
+        return (material ? res.status(StatusCodes.CREATED).json(material) : res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({message: 'Algo deu errado'}))
+    }
+
     public async getByCatador(req: Request, res: Response){
         const { id } = req.params
 
@@ -23,10 +31,10 @@ class MateriaisController {
         return (materiais.length > 0 ? res.status(StatusCodes.OK).json(materiais) : res.status(StatusCodes.NOT_FOUND).json({message: 'NOT FOUND'}))
     }
 
-    public async storeCatador(req: Request, res: Response){
-        const {id_catador, id_material} = req.params
+    public async storeCatador(req: Request<{}, {}, IMateriais>, res: Response){
+        const {id_catador, id_materiais} = req.body
 
-        const result = await Materiais.newMaterialCatador(id_catador, id_material)
+        const result = await Materiais.newMaterialCatador(id_catador, id_materiais)
         
         return (result ? res.status(StatusCodes.CREATED).json(result) : res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({message: 'Algo deu errado'}))
     }

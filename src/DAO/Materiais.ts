@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client"
+import { MateriaisCatador, PrismaClient } from "@prisma/client"
 const prisma = new PrismaClient()
 
 class Materiais {
@@ -21,17 +21,26 @@ class Materiais {
         return rs
     }
 
-    public async newMaterialCatador(id_catador: string, id_material: string): Promise<any>{
+    public async newMaterialCatador(id_catador: string, id_materiais: Array<string>): Promise<any>{
 
         try {
-            const rs = await prisma.materiaisCatador.create({
-                data: {
-                    id_catador: id_catador,
-                    id_materiais: id_material
-                }
-            }) 
+            let error = false
 
-            return (rs ? rs : false)
+            const objeto = id_materiais.map(async (item: string) => {
+                const rs = await prisma.materiaisCatador.create({
+                    data: {
+                        id_catador: id_catador,
+                        id_materiais: item
+                    }
+                })
+
+                if(!rs) error = true 
+                else return rs
+            })
+
+            const retorno = Promise.all(objeto)
+
+            return (error ? false : retorno)
         } catch (error) {
             return false
         }
@@ -52,6 +61,23 @@ class Materiais {
             return false
         }
         
+    }
+
+    public async newMaterial(nome: string): Promise<any>{
+        try {
+            const rs = await prisma.materiais.create({
+                data: {
+                    nome: nome
+                }
+            })
+
+            console.log(rs);
+
+            return (rs ? rs : false)
+        } catch (error) {
+            console.log(error);
+            return false
+        }
     }
 }
 

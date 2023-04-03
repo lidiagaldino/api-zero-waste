@@ -2,12 +2,15 @@ import { Router } from 'express'
 import MateriaisController from '../controllers/MateriaisController'
 import { auth } from '../middleware/auth'
 import { verifyCatador } from '../middleware/verifyCatador'
+import { validation } from '../middleware/validation'
+import { materiaisBodyValidation } from '../schemas/materiaisSchema'
 
 const routes = Router()
 
 routes.get('/', MateriaisController.index)
 routes.get('/:id', MateriaisController.getByCatador)
-routes.post('/:id_catador/:id_material', auth, verifyCatador, MateriaisController.storeCatador)
+routes.post('/catador', auth, verifyCatador, validation({ body: materiaisBodyValidation})  , MateriaisController.storeCatador)
+routes.post('/', MateriaisController.store)
 routes.delete('/:id_catador/:id_material', auth, verifyCatador, MateriaisController.delete)
 
 export default routes

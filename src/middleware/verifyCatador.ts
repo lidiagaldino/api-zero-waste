@@ -4,7 +4,7 @@ import Catador from "../DAO/Catador"
 
 export const verifyCatador = async (req: Request, res: Response, next: NextFunction) => {
 
-    const verificar = await Catador.getById(req.params.id_catador)
+    const verificar = await Catador.getById(req.body.id_catador)
 
     if (!verificar) return res.status(StatusCodes.NOT_FOUND).json({message: 'Catador não existe'})
 
