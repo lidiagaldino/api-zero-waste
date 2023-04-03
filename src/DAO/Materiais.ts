@@ -71,11 +71,29 @@ class Materiais {
                 }
             })
 
-            console.log(rs);
-
             return (rs ? rs : false)
         } catch (error) {
             console.log(error);
+            return false
+        }
+    }
+
+    public async noMaterial(id_catador: string): Promise<any>{
+        try {
+            const rs = await prisma.materiais.findMany({
+                where: {
+                    materiais_catador: {
+                        none: {
+                            id_catador
+                        }
+                    }
+                }
+            })
+
+            console.log(rs);
+
+            return rs
+        } catch (error) {
             return false
         }
     }

@@ -51,8 +51,14 @@ class MateriaisController {
         } else{
             return res.status(StatusCodes.BAD_REQUEST).json({message: 'Catador deve ter no minimo um material cadastrado'})
         }
+    }
 
-        
+    public async getNoMateriaisCatador(req: Request, res: Response){
+        const {id_catador} = req.params
+
+        const materiais = await Materiais.noMaterial(id_catador)
+
+        return (materiais.length > 0 ? res.status(StatusCodes.OK).json(materiais) : res.status(StatusCodes.NOT_FOUND).json({message: 'Not found'}))
     }
 
 }
