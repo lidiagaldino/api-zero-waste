@@ -6,12 +6,18 @@ import materiaisRoutes from './routes/materiaisRoutes'
 import userRouter from './routes/userRouter'
 import enderecoRoutes from './routes/enderecoRoutes'
 import favoritarRoutes from './routes/favoritarRoutes'
+import { Server } from 'socket.io'
+import { DefaultEventsMap } from 'socket.io/dist/typed-events'
+import http from 'http'
 
 class App {
     public app: express.Application
+    public httpServer: http.Server<typeof http.IncomingMessage, typeof http.ServerResponse>
+    public io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>
 
     public constructor() {
         this.app = express()
+        this.httpServer = http.createServer(this.app)
 
         this.middleware()
         this.routes()
@@ -27,6 +33,11 @@ class App {
 
     private middleware() {
         this.enableCors()
+        this.io = new Server(this.httpServer, {
+            cors: {
+                origin: "*"
+            }
+        })
         this.app.use(express.json())
     }
 
@@ -41,4 +52,4 @@ class App {
     }
 }
 
-export default new App().app
+export default new App()
