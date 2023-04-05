@@ -2,9 +2,11 @@ import { NextFunction, Request, Response } from "express"
 import { StatusCodes } from "http-status-codes"
 import Catador from "../DAO/Catador"
 
-export const verifyCatador = async (req: Request, res: Response, next: NextFunction) => {
+type modos = 'body' | 'params'
 
-    const verificar = await Catador.getById(req.body.id_catador)
+export const verifyCatador = (modo: modos) => async (req: Request, res: Response, next: NextFunction) => {
+
+    const verificar = await Catador.getById(req[modo].id_catador)
 
     if (!verificar) return res.status(StatusCodes.NOT_FOUND).json({message: 'Catador não existe'})
 
