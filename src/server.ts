@@ -6,7 +6,9 @@ import { Server } from 'socket.io';
 const port = normalizePort(process.env.PORT || '3000');
 
 app.io.on("connection", socket => {
+    const user = socket.id
     console.log(`Usuário conectado no socket ${socket.id} `);
+    app.io.emit('userConnected', user)
 })
 
 app.httpServer.listen(port, () => console.log('App rodando'))
