@@ -51,7 +51,7 @@ class UsuarioControlelr {
     public async getById(req: Request, res: Response){
         const {id} = req.params
 
-        const user = await Usuario.getUserBy(id)
+        const user = await Usuario.getUserById(id)
 
         if (!user) return res.status(StatusCodes.NOT_FOUND).json({ message: 'Not found' })
         
