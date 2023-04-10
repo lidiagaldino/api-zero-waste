@@ -48,6 +48,16 @@ class UsuarioControlelr {
 
     }
 
+    public async getById(req: Request, res: Response){
+        const {id} = req.params
+
+        const user = await Usuario.getUserBy(id)
+
+        if (!user) return res.status(StatusCodes.NOT_FOUND).json({ message: 'Not found' })
+        
+
+        return res.status(StatusCodes.OK).json({ user })
+    }
     public async update(req: Request, res: Response){
         const body = req.body
         const {id_usuario} = req
