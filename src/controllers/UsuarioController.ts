@@ -44,7 +44,7 @@ class UsuarioControlelr {
             return res.status(StatusCodes.NOT_FOUND).json({ message: 'Not found' })
         }
 
-        return res.status(StatusCodes.OK).json({ user })
+        return res.status(StatusCodes.OK).json(user)
 
     }
 
@@ -56,7 +56,7 @@ class UsuarioControlelr {
         if (!user) return res.status(StatusCodes.NOT_FOUND).json({ message: 'Not found' })
         
 
-        return res.status(StatusCodes.OK).json({ user })
+        return res.status(StatusCodes.OK).json(user)
     }
     public async update(req: Request, res: Response){
         const body = req.body
