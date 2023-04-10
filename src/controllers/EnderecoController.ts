@@ -2,6 +2,11 @@ import { Request, Response } from 'express'
 import Endereco from '../DAO/Endereco'
 import IEndereco from '../interfaces/Endereco'
 import { StatusCodes } from 'http-status-codes'
+import { string } from 'yup'
+
+type TParams = {
+    id_endereco: string
+}
 
 class EnderecoController {
     public async store(req: Request<{}, {}, Omit<IEndereco, 'id'>>, res: Response){
@@ -26,6 +31,20 @@ class EnderecoController {
         console.log(result);
 
         return (result ? res.status(StatusCodes.NO_CONTENT).json({message: 'Deletado'}) : res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({message: 'Algo deu errado'}))
+    }
+
+    public async update(req: Request<TParams, {}, Omit<IEndereco, 'id'>>, res: Response){
+        const {id_endereco} = req.params
+        const{id_usuario} = req
+        const body = req.body
+
+        const exists = await Endereco.findByUserEndereco(id_usuario, id_endereco)
+
+        if (!exists) return res.status(StatusCodes.NOT_FOUND).json({message: 'Endereço não existe ou não pertence ao usuário registrado'})
+
+        const result = await Endereco.update(id_endereco, body)
+
+        return (result ? res.status(StatusCodes.OK).json(result) : res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({message: 'Nada foi alterado'}))
     }
 }
 

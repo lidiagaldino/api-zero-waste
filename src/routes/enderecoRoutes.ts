@@ -10,6 +10,7 @@ import { verifyUser } from '../middleware/verifyUser'
 const routes = Router()
 
 routes.post('/', validation({ body: enderecoBodyValidation }), enderecoExists ,EnderecoController.store)
+routes.put('/:id_endereco', auth, validation({body: enderecoBodyValidation}), EnderecoController.update)
 routes.delete('/:id_usuario/:id_endereco', auth, verifyUser ,EnderecoController.delete)
 routes.get('/:id', EnderecoController.getByUser)
 

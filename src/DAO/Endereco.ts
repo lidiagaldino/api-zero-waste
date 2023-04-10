@@ -50,6 +50,17 @@ class Endereco {
         return (rs.length > 0 ? rs : false)
     }
 
+    public async findByUserEndereco(id_usuario:string, id_endereco:string): Promise<any>{
+        const rs = await prisma.enderecoUsuario.findMany({
+            where: {
+                id_endereco,
+                id_usuario
+            }
+        })
+
+        return (rs.length > 0 ? true : false)
+    }
+
     public async delete(id_endereco: string, id_usuario: string): Promise<any>{
 
         try {
@@ -73,6 +84,47 @@ class Endereco {
             return false
         }
         
+    }
+
+    public async update(id_endereco: string, endereco: Omit<IEndereco, 'id'>): Promise<any>{
+        try {
+            const rs = await prisma.endereco.updateMany({
+                where: {
+                    id: id_endereco
+                },
+                data: {
+                    apelido: endereco.apelido,
+                    bairro: endereco.bairro,
+                    cep: endereco.cep,
+                    cidade: endereco.cidade,
+                    complemento: endereco.complemento,
+                    estado: endereco.estado,
+                    latitude: endereco.latitude,
+                    longitude: endereco.longitude,
+                    logradouro: endereco.logradouro,
+                    numero: endereco.numero
+                }
+                
+            })
+
+            const retorno = {
+                id: id_endereco,
+                apelido: endereco.apelido,
+                    bairro: endereco.bairro,
+                    cep: endereco.cep,
+                    cidade: endereco.cidade,
+                    complemento: endereco.complemento,
+                    estado: endereco.estado,
+                    latitude: endereco.latitude,
+                    longitude: endereco.longitude,
+                    logradouro: endereco.logradouro,
+                    numero: endereco.numero
+            }
+
+            return (rs.count > 0 ? retorno : false)
+        } catch (error) {
+            return false
+        }
     }
 }
 
