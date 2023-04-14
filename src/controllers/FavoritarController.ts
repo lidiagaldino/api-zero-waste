@@ -28,6 +28,14 @@ class FavoritarController{
 
         return (rs.length > 0 ? res.status(StatusCodes.OK).json(rs) : res.status(StatusCodes.NOT_FOUND).json({}))
     }
+
+    public async getById(req: Request, res: Response){
+        const {id_catador, id_gerador} = req.params
+
+        const rs = await Favoritar.getById(id_gerador, id_catador)
+
+        return (rs.length > 0 ? res.status(StatusCodes.OK).json(rs) : res.status(StatusCodes.NOT_FOUND).json({}))
+    }
 }
 
 export default new FavoritarController()

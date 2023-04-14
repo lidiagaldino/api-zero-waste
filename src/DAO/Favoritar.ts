@@ -58,6 +58,18 @@ class Favoritar{
 
         return (rs.length > 0 ? rs : false)
     } 
+
+    public async getById(id_gerador: string, id_catador: string): Promise<any>{
+
+        const rs = await prisma.favoritarCatador.findMany({
+            where: {
+                id_catador,
+                id_gerador
+            }
+        })
+
+        return (rs.length > 0 ? rs : false)
+    }
 }
 
 export default new Favoritar()

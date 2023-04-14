@@ -9,5 +9,6 @@ const routes = Router()
 
 routes.get('/:id', auth, FavoritarController.index)
 routes.patch('/', validation({ body: favoritarBodyValidation }), auth, verifyCatador('body') , FavoritarController.toggle)
+routes.get('/:id_gerador/:id_catador', FavoritarController.getById)
 
 export default routes
