@@ -50,7 +50,12 @@ class Favoritar{
             include: {
                 catador: {
                     include: {
-                        user: true
+                        user: {
+                            include: {
+                                pessoa_fisica: true,
+                                pessoa_juridica: true
+                            }
+                        }
                     }
                 }
             }
