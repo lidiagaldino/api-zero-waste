@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import Endereco from "../DAO/Endereco";
 import IEndereco from "../interfaces/Endereco";
 import { StatusCodes } from "http-status-codes";
-import { string } from "yup";
 
 type TParams = {
   id: string;

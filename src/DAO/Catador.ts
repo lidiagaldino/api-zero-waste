@@ -31,7 +31,7 @@ class Catador {
     try {
       const rs = await prisma.catador.findUnique({
         where: {
-          id,
+          id: Number(id),
         },
       });
 

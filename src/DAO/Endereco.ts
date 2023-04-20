@@ -20,10 +20,12 @@ class Endereco {
         },
       });
 
+      console.log(resultEndereco);
+
       const result = await prisma.enderecoUsuario.create({
         data: {
-          id_endereco: resultEndereco.id,
-          id_usuario: endereco.id_usuario,
+          id_endereco: Number(resultEndereco.id),
+          id_usuario: Number(endereco.id_usuario),
         },
         include: {
           endereco: true,
@@ -32,6 +34,7 @@ class Endereco {
 
       return result ? result : false;
     } catch (error) {
+      console.log(error);
       return false;
     }
   }
@@ -39,7 +42,7 @@ class Endereco {
   public async findByUser(id: number): Promise<any> {
     const rs = await prisma.enderecoUsuario.findMany({
       where: {
-        id_usuario: id,
+        id_usuario: Number(id),
       },
       include: {
         endereco: true,
@@ -55,8 +58,8 @@ class Endereco {
   ): Promise<any> {
     const rs = await prisma.enderecoUsuario.findMany({
       where: {
-        id_endereco,
-        id_usuario,
+        id_endereco: Number(id_endereco),
+        id_usuario: Number(id_usuario),
       },
     });
 
@@ -67,14 +70,14 @@ class Endereco {
     try {
       await prisma.enderecoUsuario.deleteMany({
         where: {
-          id_endereco: id_endereco,
-          id_usuario: id_usuario,
+          id_endereco: Number(id_endereco),
+          id_usuario: Number(id_usuario),
         },
       });
 
       await prisma.endereco.deleteMany({
         where: {
-          id: id_endereco,
+          id: Number(id_endereco),
         },
       });
 
@@ -91,7 +94,7 @@ class Endereco {
     try {
       const rs = await prisma.endereco.updateMany({
         where: {
-          id: id_endereco,
+          id: Number(id_endereco),
         },
         data: {
           apelido: endereco.apelido,
@@ -108,7 +111,7 @@ class Endereco {
       });
 
       const retorno = {
-        id: id_endereco,
+        id: Number(id_endereco),
         apelido: endereco.apelido,
         bairro: endereco.bairro,
         cep: endereco.cep,
@@ -130,7 +133,7 @@ class Endereco {
   public async findById(id: number): Promise<any> {
     const endereco = await prisma.endereco.findUnique({
       where: {
-        id,
+        id: Number(id),
       },
     });
 

@@ -15,8 +15,8 @@ class Favoritar {
   ): Promise<Favorito> {
     const find = await prisma.favoritarCatador.findFirst({
       where: {
-        id_catador,
-        id_gerador,
+        id_catador: Number(id_catador),
+        id_gerador: Number(id_gerador),
       },
     });
 
@@ -25,8 +25,8 @@ class Favoritar {
     if (!find) {
       result = await prisma.favoritarCatador.create({
         data: {
-          id_catador,
-          id_gerador,
+          id_catador: Number(id_catador),
+          id_gerador: Number(id_gerador),
         },
       });
 
@@ -34,7 +34,7 @@ class Favoritar {
     } else {
       result = await prisma.favoritarCatador.delete({
         where: {
-          id: find.id,
+          id: Number(find.id),
         },
       });
 
@@ -47,7 +47,7 @@ class Favoritar {
   public async getAll(id_gerador: number): Promise<any> {
     const rs = await prisma.favoritarCatador.findMany({
       where: {
-        id_gerador,
+        id_gerador: Number(id_gerador),
       },
       include: {
         catador: {
@@ -69,8 +69,8 @@ class Favoritar {
   public async getById(id_gerador: number, id_catador: number): Promise<any> {
     const rs = await prisma.favoritarCatador.findMany({
       where: {
-        id_catador,
-        id_gerador,
+        id_catador: Number(id_catador),
+        id_gerador: Number(id_gerador),
       },
     });
 
@@ -83,7 +83,7 @@ class Favoritar {
   ): Promise<any> {
     const getLatLong = await prisma.endereco.findUnique({
       where: {
-        id: id_endereco,
+        id: Number(id_endereco),
       },
     });
 

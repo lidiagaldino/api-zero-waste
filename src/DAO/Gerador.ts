@@ -25,7 +25,7 @@ class Gerador {
   public async getById(id: number): Promise<any> {
     const rs = await prisma.gerador.findUnique({
       where: {
-        id,
+        id: Number(id),
       },
     });
 
@@ -36,7 +36,7 @@ class Gerador {
     try {
       const getLatLong = await prisma.endereco.findUnique({
         where: {
-          id: id_endereco,
+          id: Number(id_endereco),
         },
       });
 

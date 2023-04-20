@@ -61,8 +61,8 @@ class Usuario {
         usuario.materiais.map(async (item) => {
           teste = await prisma.materiaisCatador.create({
             data: {
-              id_catador: result.catador[0].id,
-              id_materiais: item,
+              id_catador: Number(result.catador[0].id),
+              id_materiais: Number(item),
             },
             include: {
               catador: true,
@@ -71,7 +71,7 @@ class Usuario {
         });
 
         const newUser = {
-          id: result.id,
+          id: Number(result.id),
           nome: usuario.nome,
           endereco: {
             cep: usuario.endereco.cep,
@@ -156,8 +156,8 @@ class Usuario {
         usuario.materiais.map(async (item) => {
           teste = await prisma.materiaisCatador.create({
             data: {
-              id_catador: result.catador[0].id,
-              id_materiais: item,
+              id_catador: Number(result.catador[0].id),
+              id_materiais: Number(item),
             },
             include: {
               catador: true,
@@ -168,7 +168,7 @@ class Usuario {
         console.log(teste);
 
         const newUser = {
-          id: result.id,
+          id: Number(result.id),
           nome: usuario.nome,
           endereco: {
             cep: usuario.endereco.cep,
@@ -241,7 +241,7 @@ class Usuario {
         });
 
         const newUser = {
-          id: result.id,
+          id: Number(result.id),
           nome: usuario.nome,
           endereco: {
             cep: usuario.endereco.cep,
@@ -312,7 +312,7 @@ class Usuario {
         });
 
         const newUser = {
-          id: result.id,
+          id: Number(result.id),
           nome: usuario.nome,
           endereco: {
             cep: usuario.endereco.cep,
@@ -372,7 +372,7 @@ class Usuario {
   public async getUserById(value: number): Promise<boolean | any> {
     const result = await prisma.usuario.findFirst({
       where: {
-        id: value,
+        id: Number(value),
       },
       include: {
         catador: {
@@ -405,7 +405,7 @@ class Usuario {
     try {
       const rs = await prisma.usuario.update({
         where: {
-          id,
+          id: Number(id),
         },
         data: {
           email: user.email,
@@ -423,7 +423,7 @@ class Usuario {
       if (user.cnpj) {
         fisico_juridico = await prisma.pessoaJuridica.updateMany({
           where: {
-            id_usuario: id,
+            id_usuario: Number(id),
           },
           data: {
             cnpj: user.cnpj,
@@ -442,7 +442,7 @@ class Usuario {
       } else {
         fisico_juridico = await prisma.pessoaFisica.updateMany({
           where: {
-            id_usuario: id,
+            id_usuario: Number(id),
           },
           data: {
             cpf: user.cpf,
@@ -472,7 +472,7 @@ class Usuario {
     try {
       const rs = await prisma.usuario.update({
         where: {
-          id: id,
+          id: Number(id),
         },
         data: {
           biografia: bio,
@@ -489,7 +489,7 @@ class Usuario {
     try {
       const rs = await prisma.usuario.update({
         where: {
-          id: id,
+          id: Number(id),
         },
         data: {
           foto: url,

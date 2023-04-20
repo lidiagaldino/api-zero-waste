@@ -11,7 +11,7 @@ class Materiais {
   public async getByCatador(id: number): Promise<any> {
     const rs = await prisma.materiaisCatador.findMany({
       where: {
-        id_catador: id,
+        id_catador: Number(id),
       },
       include: {
         material: true,
@@ -31,8 +31,8 @@ class Materiais {
       const objeto = id_materiais.map(async (item: number) => {
         const rs = await prisma.materiaisCatador.create({
           data: {
-            id_catador: id_catador,
-            id_materiais: item,
+            id_catador: Number(id_catador),
+            id_materiais: Number(item),
           },
         });
 
@@ -55,8 +55,8 @@ class Materiais {
     try {
       const rs = await prisma.materiaisCatador.deleteMany({
         where: {
-          id_catador: id_catador,
-          id_materiais: id_material,
+          id_catador: Number(id_catador),
+          id_materiais: Number(id_material),
         },
       });
 
@@ -87,7 +87,7 @@ class Materiais {
         where: {
           materiais_catador: {
             none: {
-              id_catador,
+              id_catador: Number(id_catador),
             },
           },
         },
