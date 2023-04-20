@@ -1,42 +1,48 @@
-import { Request, Response } from 'express'
-import { StatusCodes } from 'http-status-codes'
+import { Request, Response } from "express";
+import { StatusCodes } from "http-status-codes";
 
-import Usuario from '../DAO/Usuario'
-import Gerador from '../DAO/Gerador'
+import Usuario from "../DAO/Usuario";
+import Gerador from "../DAO/Gerador";
 
-import IGerador from '../interfaces/Gerador'
+import IGerador from "../interfaces/Gerador";
 
 class GeradorController {
+  public async index(_req: Request, res: Response) {
+    const geradores = await Gerador.getAll();
 
-    public async index(_req: Request, res: Response) {
+    if (geradores)
+      return res.status(StatusCodes.OK).json({ message: geradores });
 
-        const geradores = await Gerador.getAll()
+    return res.status(StatusCodes.NOT_FOUND).json({ message: "Not found" });
+  }
 
-        if (geradores) return res.status(StatusCodes.OK).json({ message: geradores })
+  public async store(
+    req: Request<{}, {}, Omit<IGerador, "id">>,
+    res: Response
+  ) {
+    const body = req.body;
 
-        return res.status(StatusCodes.NOT_FOUND).json({ message: 'Not found' })
-    }
+    let rs: any;
 
-    public async store(req: Request<{}, {}, Omit<IGerador, 'id'>>, res: Response) {
+    if (body.cnpj) rs = await Usuario.newUserGeradorJud(body);
+    else rs = await Usuario.newUserGerador(body);
 
-        const body = req.body
+    return rs == false
+      ? res
+          .status(StatusCodes.INTERNAL_SERVER_ERROR)
+          .json({ message: "Não foi possível criar" })
+      : res.status(StatusCodes.CREATED).json(rs);
+  }
 
-        let rs: any
+  public async nearCatadores(req: Request, res: Response) {
+    const { id_endereco } = req.params;
 
-        if (body.cnpj) rs = await Usuario.newUserGeradorJud(body)
-        else rs = await Usuario.newUserGerador(body)
+    const rs = await Gerador.getNearCatadores(Number(id_endereco));
 
-        return (rs == false ? res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: 'Não foi possível criar' }) : res.status(StatusCodes.CREATED).json(rs))
-    }
-
-    public async nearCatadores(req: Request, res: Response) {
-        const { id_endereco } = req.params
-
-        const rs = await Gerador.getNearCatadores(id_endereco)
-
-        return (rs.length > 0 ? res.status(StatusCodes.OK).json(rs) : res.status(StatusCodes.OK).json({ messsage: 'NOT FOUND' }))
-    }
-
+    return rs.length > 0
+      ? res.status(StatusCodes.OK).json(rs)
+      : res.status(StatusCodes.OK).json({ messsage: "NOT FOUND" });
+  }
 }
 
-export default new GeradorController()
+export default new GeradorController();

@@ -45,6 +45,8 @@ model PessoaJuridica {
 
   user       Usuario @relation(fields: [id_usuario], references: [id])
   id_usuario Int
+
+  @@map("tbl_pessoa_juridica")
 }
 
 model Catador {
@@ -55,6 +57,8 @@ model Catador {
   materiais_catador MateriaisCatador[]
   FavoritarCatador  FavoritarCatador[]
   Pedido            Pedido[]
+
+  @@map("tbl_catador")
 }
 
 model Materiais {
@@ -62,6 +66,8 @@ model Materiais {
   nome              String
   materiais_catador MateriaisCatador[]
   MateriaisPedido   MateriaisPedido[]
+
+  @@map("tbl_materiais")
 }
 
 model MateriaisCatador {
@@ -70,6 +76,8 @@ model MateriaisCatador {
   id_materiais Int
   catador      Catador   @relation(fields: [id_catador], references: [id])
   id_catador   Int
+
+  @@map("tbl_materiais_catador")
 }
 
 model Endereco {
@@ -86,6 +94,8 @@ model Endereco {
   numero           String
   endereco_usuario EnderecoUsuario[]
   Pedido           Pedido[]
+
+  @@map("tbl_endereco")
 }
 
 model EnderecoUsuario {
@@ -94,6 +104,8 @@ model EnderecoUsuario {
   usuario     Usuario  @relation(fields: [id_usuario], references: [id])
   id_endereco Int
   id_usuario  Int
+
+  @@map("tbl_endereco_usuario")
 }
 
 model Gerador {
@@ -102,6 +114,8 @@ model Gerador {
   id_usuario       Int
   FavoritarCatador FavoritarCatador[]
   Pedido           Pedido[]
+
+  @@map("tbl_gerador")
 }
 
 model FavoritarCatador {
@@ -110,6 +124,8 @@ model FavoritarCatador {
   id_catador Int
   gerador    Gerador @relation(fields: [id_gerador], references: [id])
   id_gerador Int
+
+  @@map("tbl_favoritar_catador")
 }
 
 model MateriaisPedido {
@@ -118,6 +134,8 @@ model MateriaisPedido {
   id_material Int
   pedido      Pedido    @relation(fields: [id_pedido], references: [id])
   id_pedido   Int
+
+  @@map("tbl_materiais_pedido")
 }
 
 model Pedido {
@@ -132,4 +150,6 @@ model Pedido {
   endereco        Endereco          @relation(fields: [id_endereco], references: [id])
   id_endereco     Int
   MateriaisPedido MateriaisPedido[]
+
+  @@map("tbl_pedido")
 }

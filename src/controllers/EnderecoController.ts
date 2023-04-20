@@ -25,7 +25,7 @@ class EnderecoController {
   public async getByUser(req: Request, res: Response) {
     const { id } = req.params;
 
-    const rs = await Endereco.findByUser(id);
+    const rs = await Endereco.findByUser(Number(id));
 
     return rs == false
       ? res.status(StatusCodes.NOT_FOUND).json({ message: "NOT FOUND" })
@@ -35,7 +35,10 @@ class EnderecoController {
   public async delete(req: Request, res: Response) {
     const { id_endereco, id_usuario } = req.params;
 
-    const result = await Endereco.delete(id_endereco, id_usuario);
+    const result = await Endereco.delete(
+      Number(id_endereco),
+      Number(id_usuario)
+    );
     console.log(result);
 
     return result
@@ -53,14 +56,17 @@ class EnderecoController {
     const { id_usuario } = req;
     const body = req.body;
 
-    const exists = await Endereco.findByUserEndereco(id_usuario, id);
+    const exists = await Endereco.findByUserEndereco(
+      Number(id_usuario),
+      Number(id)
+    );
 
     if (!exists)
       return res.status(StatusCodes.NOT_FOUND).json({
         message: "Endereço não existe ou não pertence ao usuário registrado",
       });
 
-    const result = await Endereco.update(id, body);
+    const result = await Endereco.update(Number(id), body);
 
     return result
       ? res.status(StatusCodes.OK).json(result)
@@ -72,7 +78,7 @@ class EnderecoController {
   public async getById(req: Request<TParams, {}, {}>, res: Response) {
     const { id } = req.params;
 
-    const endereco = await Endereco.findById(id);
+    const endereco = await Endereco.findById(Number(id));
 
     return endereco
       ? res.status(StatusCodes.OK).json(endereco)

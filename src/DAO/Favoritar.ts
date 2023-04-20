@@ -2,16 +2,16 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 type Favorito = {
-  id: string;
-  id_catador: string;
-  id_gerador: string;
+  id: number;
+  id_catador: number;
+  id_gerador: number;
   action?: "CREATED" | "DELETED";
 };
 
 class Favoritar {
   public async favorite(
-    id_gerador: string,
-    id_catador: string
+    id_gerador: number,
+    id_catador: number
   ): Promise<Favorito> {
     const find = await prisma.favoritarCatador.findFirst({
       where: {
@@ -44,7 +44,7 @@ class Favoritar {
     return result;
   }
 
-  public async getAll(id_gerador: string): Promise<any> {
+  public async getAll(id_gerador: number): Promise<any> {
     const rs = await prisma.favoritarCatador.findMany({
       where: {
         id_gerador,
@@ -66,7 +66,7 @@ class Favoritar {
     return rs.length > 0 ? rs : false;
   }
 
-  public async getById(id_gerador: string, id_catador: string): Promise<any> {
+  public async getById(id_gerador: number, id_catador: number): Promise<any> {
     const rs = await prisma.favoritarCatador.findMany({
       where: {
         id_catador,
@@ -78,8 +78,8 @@ class Favoritar {
   }
 
   public async getByEndereco(
-    id_gerador: string,
-    id_endereco: string
+    id_gerador: number,
+    id_endereco: number
   ): Promise<any> {
     const getLatLong = await prisma.endereco.findUnique({
       where: {

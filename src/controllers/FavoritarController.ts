@@ -35,7 +35,7 @@ class FavoritarController {
   public async index(req: Request, res: Response) {
     const id = req.params.id;
 
-    const rs = await Favoritar.getAll(id.toString());
+    const rs = await Favoritar.getAll(Number(id));
 
     return rs.length > 0
       ? res.status(StatusCodes.OK).json(rs)
@@ -45,7 +45,7 @@ class FavoritarController {
   public async getById(req: Request, res: Response) {
     const { id_catador, id_gerador } = req.params;
 
-    const rs = await Favoritar.getById(id_gerador, id_catador);
+    const rs = await Favoritar.getById(Number(id_gerador), Number(id_catador));
 
     return rs.length > 0
       ? res.status(StatusCodes.OK).json(rs)
@@ -55,7 +55,10 @@ class FavoritarController {
   public async getByEndereco(req: Request, res: Response) {
     const { id_endereco, id_gerador } = req.params;
 
-    const rs = await Favoritar.getByEndereco(id_gerador, id_endereco);
+    const rs = await Favoritar.getByEndereco(
+      Number(id_gerador),
+      Number(id_endereco)
+    );
 
     return rs.length > 0
       ? res.status(StatusCodes.OK).json(rs)

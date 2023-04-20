@@ -36,7 +36,7 @@ class Endereco {
     }
   }
 
-  public async findByUser(id: string): Promise<any> {
+  public async findByUser(id: number): Promise<any> {
     const rs = await prisma.enderecoUsuario.findMany({
       where: {
         id_usuario: id,
@@ -50,8 +50,8 @@ class Endereco {
   }
 
   public async findByUserEndereco(
-    id_usuario: string,
-    id_endereco: string
+    id_usuario: number,
+    id_endereco: number
   ): Promise<any> {
     const rs = await prisma.enderecoUsuario.findMany({
       where: {
@@ -63,7 +63,7 @@ class Endereco {
     return rs.length > 0 ? true : false;
   }
 
-  public async delete(id_endereco: string, id_usuario: string): Promise<any> {
+  public async delete(id_endereco: number, id_usuario: number): Promise<any> {
     try {
       await prisma.enderecoUsuario.deleteMany({
         where: {
@@ -85,7 +85,7 @@ class Endereco {
   }
 
   public async update(
-    id_endereco: string,
+    id_endereco: number,
     endereco: Omit<IEndereco, "id">
   ): Promise<any> {
     try {
@@ -127,7 +127,7 @@ class Endereco {
     }
   }
 
-  public async findById(id: string): Promise<any> {
+  public async findById(id: number): Promise<any> {
     const endereco = await prisma.endereco.findUnique({
       where: {
         id,

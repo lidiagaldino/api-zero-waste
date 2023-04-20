@@ -369,7 +369,7 @@ class Usuario {
     return result != null ? result : false;
   }
 
-  public async getUserById(value: string): Promise<boolean | any> {
+  public async getUserById(value: number): Promise<boolean | any> {
     const result = await prisma.usuario.findFirst({
       where: {
         id: value,
@@ -399,7 +399,7 @@ class Usuario {
   }
 
   public async updateUser(
-    id: string,
+    id: number,
     user: Omit<IUsuario, "id">
   ): Promise<any> {
     try {
@@ -468,7 +468,7 @@ class Usuario {
     }
   }
 
-  public async updateBio(id: string, bio: string): Promise<any> {
+  public async updateBio(id: number, bio: string): Promise<any> {
     try {
       const rs = await prisma.usuario.update({
         where: {
@@ -485,7 +485,7 @@ class Usuario {
     }
   }
 
-  public async updatePhoto(id: string, url: string): Promise<any> {
+  public async updatePhoto(id: number, url: string): Promise<any> {
     try {
       const rs = await prisma.usuario.update({
         where: {
