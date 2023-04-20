@@ -42,7 +42,7 @@ class Gerador {
 
       const sql = `
             SELECT tbl_catador.id as id_catador, tbl_usuario.id as id_usuario, logradouro, cidade, numero, tbl_usuario.foto, tbl_pessoa_fisica.nome, tbl_pessoa_juridica.nome_fantasia, ST_DISTANCE_SPHERE(POINT(${getLatLong.latitude}, ${getLatLong.longitude}), POINT(latitude, longitude)) AS distance
-                FROM Endereco
+                FROM tbl_endereco
                 INNER JOIN tbl_endereco_usuario
                     ON tbl_endereco_usuario.id_endereco = tbl_endereco.id
                 INNER JOIN tbl_usuario
