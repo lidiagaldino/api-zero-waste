@@ -88,21 +88,21 @@ class Favoritar {
     });
 
     const sql = `
-            SELECT Catador.id as id_catador, tbl_usuario.id as id_usuario, logradouro, cidade, numero, tbl_usuario.foto, tbl_pessoa_fisica.nome, PessoaJuridica.nome_fantasia, ST_DISTANCE_SPHERE(POINT(${getLatLong.latitude}, ${getLatLong.longitude}), POINT(latitude, longitude)) AS distance
-                FROM Endereco
-                INNER JOIN EnderecoUsuario
-                    ON EnderecoUsuario.id_endereco = Endereco.id
+            SELECT tbl_catador.id as id_catador, tbl_usuario.id as id_usuario, logradouro, cidade, numero, tbl_usuario.foto, tbl_pessoa_fisica.nome, tbl_pessoa_juridica.nome_fantasia, ST_DISTANCE_SPHERE(POINT(${getLatLong.latitude}, ${getLatLong.longitude}), POINT(latitude, longitude)) AS distance
+                FROM tbl_endereco
+                INNER JOIN tbl_endereco_usuario
+                    ON tbl_endereco_usuario.id_endereco = tbl_endereco.id
                 INNER JOIN tbl_usuario
-                    ON tbl_usuario.id = EnderecoUsuario.id_usuario
+                    ON tbl_usuario.id = tbl_endereco_usuario.id_usuario
                 LEFT JOIN tbl_pessoa_fisica
                     ON tbl_pessoa_fisica.id_usuario = tbl_usuario.id
-                LEFT JOIN PessoaJuridica
-                    ON PessoaJuridica.id_usuario = tbl_usuario.id
-                INNER JOIN Catador
-                    ON Catador.id_usuario = tbl_usuario.id
-                INNER JOIN FavoritarCatador
-                    ON Catador.id = FavoritarCatador.id_catador
-                WHERE ST_DISTANCE_SPHERE(POINT(${getLatLong.latitude}, ${getLatLong.longitude}), POINT(latitude, longitude)) <= 10000 AND FavoritarCatador.id_gerador = '${id_gerador}'
+                LEFT JOIN tbl_pessoa_juridica
+                    ON tbl_pessoa_juridica.id_usuario = tbl_usuario.id
+                INNER JOIN tbl_catador
+                    ON tbl_catador.id_usuario = tbl_usuario.id
+                INNER JOIN tbl_favoritar_catador
+                    ON tbl_catador.id = tbl_favoritar_catador.id_catador
+                WHERE ST_DISTANCE_SPHERE(POINT(${getLatLong.latitude}, ${getLatLong.longitude}), POINT(latitude, longitude)) <= 10000 AND tbl_favoritar_catador.id_gerador = '${id_gerador}'
                 ORDER BY distance
             LIMIT 10;
             `;
