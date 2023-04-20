@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -17,11 +14,11 @@ model Usuario {
   telefone         String
   foto             String
   biografia        String?
-  pessoa_fisica    PessoaFisica[]
-  pessoa_juridica  PessoaJuridica[]
   catador          Catador[]
   endereco_usuario EnderecoUsuario[]
   gerador          Gerador[]
+  pessoa_fisica    PessoaFisica[]
+  pessoa_juridica  PessoaJuridica[]
 
   @@map("tbl_usuario")
 }
@@ -31,33 +28,34 @@ model PessoaFisica {
   cpf             String
   nome            String
   data_nascimento DateTime
+  id_usuario      Int
+  user            Usuario  @relation(fields: [id_usuario], references: [id])
 
-  user       Usuario @relation(fields: [id_usuario], references: [id])
-  id_usuario Int
-
+  @@index([id_usuario], map: "tbl_pessoa_fisica_id_usuario_fkey")
   @@map("tbl_pessoa_fisica")
 }
 
 model PessoaJuridica {
-  id            Int    @id @unique @default(autoincrement())
+  id            Int     @id @unique @default(autoincrement())
   cnpj          String
   nome_fantasia String
+  id_usuario    Int
+  user          Usuario @relation(fields: [id_usuario], references: [id])
 
-  user       Usuario @relation(fields: [id_usuario], references: [id])
-  id_usuario Int
-
+  @@index([id_usuario], map: "tbl_pessoa_juridica_id_usuario_fkey")
   @@map("tbl_pessoa_juridica")
 }
 
 model Catador {
   id                Int                @id @unique @default(autoincrement())
-  user              Usuario            @relation(fields: [id_usuario], references: [id])
   status            String?
   id_usuario        Int
-  materiais_catador MateriaisCatador[]
+  user              Usuario            @relation(fields: [id_usuario], references: [id])
   FavoritarCatador  FavoritarCatador[]
+  materiais_catador MateriaisCatador[]
   Pedido            Pedido[]
 
+  @@index([id_usuario], map: "tbl_catador_id_usuario_fkey")
   @@map("tbl_catador")
 }
 
@@ -72,11 +70,13 @@ model Materiais {
 
 model MateriaisCatador {
   id           Int       @id @unique @default(autoincrement())
-  material     Materiais @relation(fields: [id_materiais], references: [id])
   id_materiais Int
-  catador      Catador   @relation(fields: [id_catador], references: [id])
   id_catador   Int
+  catador      Catador   @relation(fields: [id_catador], references: [id])
+  material     Materiais @relation(fields: [id_materiais], references: [id])
 
+  @@index([id_catador], map: "tbl_materiais_catador_id_catador_fkey")
+  @@index([id_materiais], map: "tbl_materiais_catador_id_materiais_fkey")
   @@map("tbl_materiais_catador")
 }
 
@@ -100,41 +100,48 @@ model Endereco {
 
 model EnderecoUsuario {
   id          Int      @id @unique @default(autoincrement())
-  endereco    Endereco @relation(fields: [id_endereco], references: [id])
-  usuario     Usuario  @relation(fields: [id_usuario], references: [id])
   id_endereco Int
   id_usuario  Int
+  endereco    Endereco @relation(fields: [id_endereco], references: [id])
+  usuario     Usuario  @relation(fields: [id_usuario], references: [id])
 
+  @@index([id_endereco], map: "tbl_endereco_usuario_id_endereco_fkey")
+  @@index([id_usuario], map: "tbl_endereco_usuario_id_usuario_fkey")
   @@map("tbl_endereco_usuario")
 }
 
 model Gerador {
   id               Int                @id @unique @default(autoincrement())
-  user             Usuario            @relation(fields: [id_usuario], references: [id])
   id_usuario       Int
   FavoritarCatador FavoritarCatador[]
+  user             Usuario            @relation(fields: [id_usuario], references: [id])
   Pedido           Pedido[]
 
+  @@index([id_usuario], map: "tbl_gerador_id_usuario_fkey")
   @@map("tbl_gerador")
 }
 
 model FavoritarCatador {
   id         Int     @id @unique @default(autoincrement())
-  catador    Catador @relation(fields: [id_catador], references: [id])
   id_catador Int
-  gerador    Gerador @relation(fields: [id_gerador], references: [id])
   id_gerador Int
+  catador    Catador @relation(fields: [id_catador], references: [id])
+  gerador    Gerador @relation(fields: [id_gerador], references: [id])
 
+  @@index([id_catador], map: "tbl_favoritar_catador_id_catador_fkey")
+  @@index([id_gerador], map: "tbl_favoritar_catador_id_gerador_fkey")
   @@map("tbl_favoritar_catador")
 }
 
 model MateriaisPedido {
   id          Int       @id @unique @default(autoincrement())
-  material    Materiais @relation(fields: [id_material], references: [id])
   id_material Int
-  pedido      Pedido    @relation(fields: [id_pedido], references: [id])
   id_pedido   Int
+  material    Materiais @relation(fields: [id_material], references: [id])
+  pedido      Pedido    @relation(fields: [id_pedido], references: [id])
 
+  @@index([id_material], map: "tbl_materiais_pedido_id_material_fkey")
+  @@index([id_pedido], map: "tbl_materiais_pedido_id_pedido_fkey")
   @@map("tbl_materiais_pedido")
 }
 
@@ -143,13 +150,16 @@ model Pedido {
   created_at      DateTime          @default(now())
   status          String
   finished_at     DateTime?
-  catador         Catador?          @relation(fields: [id_catador], references: [id])
   id_catador      Int?
-  gerador         Gerador           @relation(fields: [id_gerador], references: [id])
   id_gerador      Int
-  endereco        Endereco          @relation(fields: [id_endereco], references: [id])
   id_endereco     Int
   MateriaisPedido MateriaisPedido[]
+  catador         Catador?          @relation(fields: [id_catador], references: [id])
+  endereco        Endereco          @relation(fields: [id_endereco], references: [id])
+  gerador         Gerador           @relation(fields: [id_gerador], references: [id])
 
+  @@index([id_catador], map: "tbl_pedido_id_catador_fkey")
+  @@index([id_endereco], map: "tbl_pedido_id_endereco_fkey")
+  @@index([id_gerador], map: "tbl_pedido_id_gerador_fkey")
   @@map("tbl_pedido")
 }
