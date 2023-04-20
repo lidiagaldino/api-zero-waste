@@ -1,7 +1,4 @@
 export default interface IMateriais {
-    id_catador: string
-    id_materiais: [
-        string
-    ]
-    
+  id_catador: number;
+  id_materiais: [number];
 }

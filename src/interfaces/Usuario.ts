@@ -1,11 +1,11 @@
 export default interface IUsuario {
-    id: string,
-    nome: string,
-    telefone: string,
-    email: string,
-    senha: string,
-    cpf?: string,
-    cnpj?: string,
-    foto: string,
-    biografia: string
+  id: number;
+  nome: string;
+  telefone: string;
+  email: string;
+  senha: string;
+  cpf?: string;
+  cnpj?: string;
+  foto: string;
+  biografia: string;
 }

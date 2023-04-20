@@ -1,3 +1,3 @@
 export default interface IParams {
-    id_usuario: string
+  id_usuario: number;
 }

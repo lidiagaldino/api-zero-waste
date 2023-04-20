@@ -1,10 +1,11 @@
-import * as yup from 'yup'
-import IEndereco from '../interfaces/Endereco'
+import * as yup from "yup";
+import IEndereco from "../interfaces/Endereco";
 
-interface IBodyProps extends Omit<IEndereco, 'id'> { }
+interface IBodyProps extends Omit<IEndereco, "id"> {}
 
-export const enderecoBodyValidation: yup.SchemaOf<IBodyProps> = yup.object().shape({
-
+export const enderecoBodyValidation: yup.SchemaOf<IBodyProps> = yup
+  .object()
+  .shape({
     cep: yup.string().required(),
     logradouro: yup.string().required(),
     bairro: yup.string().required(),
@@ -15,6 +16,5 @@ export const enderecoBodyValidation: yup.SchemaOf<IBodyProps> = yup.object().sha
     numero: yup.string().required(),
     latitude: yup.string().required(),
     longitude: yup.string().required(),
-    id_usuario: yup.string().uuid()
-
-})
+    id_usuario: yup.number(),
+  });

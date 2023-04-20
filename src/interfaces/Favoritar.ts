@@ -1,5 +1,5 @@
 export default interface IFavoritar {
-    id: string
-    id_gerador: string,
-    id_catador: string
+  id: number;
+  id_gerador: number;
+  id_catador: number;
 }
