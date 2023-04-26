@@ -41,7 +41,7 @@ class EnderecoController {
     console.log(result);
 
     return result
-      ? res.status(StatusCodes.NO_CONTENT).json({ message: "Deletado" })
+      ? res.status(StatusCodes.OK).json({ message: "Deletado" })
       : res
           .status(StatusCodes.INTERNAL_SERVER_ERROR)
           .json({ message: "Algo deu errado" });

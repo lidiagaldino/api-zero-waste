@@ -25,6 +25,7 @@ routes.delete(
   "/:id_usuario/:id_endereco",
   auth,
   verifyUser,
+  enderecoExists,
   EnderecoController.delete
 );
 routes.get("/:id", EnderecoController.getByUser);

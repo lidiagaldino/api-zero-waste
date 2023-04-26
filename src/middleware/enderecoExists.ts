@@ -1,16 +1,32 @@
-import { NextFunction, Request, Response } from "express"
-import { StatusCodes } from "http-status-codes"
-import Endereco from "../DAO/Endereco"
+import { NextFunction, Request, Response } from "express";
+import { StatusCodes } from "http-status-codes";
+import Endereco from "../DAO/Endereco";
 
-export const enderecoExists = async (req: Request, res: Response, next: NextFunction) => {
+export const enderecoExists = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const verificar = await Endereco.findByUser(Number(req.params.id_usuario));
 
-    const verificar = await Endereco.findByUser(req.body.id_usuario)
+  console.log(verificar);
 
-    verificar.map((item: any) => {
-        if (item.endereco.cep == req.body.cep && item.endereco.complemento == req.body.complemento) {
-            return res.status(StatusCodes.BAD_REQUEST).json({message: 'Endereço já existe'})
-        }
-    })
+  if (verificar.length == 1) {
+    return res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ message: "Você deve ter no minímo um endereço" });
+  }
 
-    next()
-}
+  verificar.map((item: any) => {
+    if (
+      item.endereco.cep == req.body.cep &&
+      item.endereco.complemento == req.body.complemento
+    ) {
+      return res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ message: "Endereço já existe" });
+    }
+  });
+
+  return next();
+};
