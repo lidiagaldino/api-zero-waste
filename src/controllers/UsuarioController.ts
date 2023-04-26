@@ -92,6 +92,18 @@ class UsuarioControlelr {
           .status(StatusCodes.INTERNAL_SERVER_ERROR)
           .json({ message: "Algo deu errado" });
   }
+
+  public async delete(req: Request, res: Response) {
+    const { id_usuario } = req;
+
+    const rs = await Usuario.delete(Number(id_usuario));
+
+    return rs
+      ? res.status(StatusCodes.OK).json({})
+      : res
+          .status(StatusCodes.INTERNAL_SERVER_ERROR)
+          .json({ message: "Algo deu errado" });
+  }
 }
 
 export default new UsuarioControlelr();

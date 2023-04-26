@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["referentialActions"]
 }
 
 datasource db {
@@ -29,7 +30,7 @@ model PessoaFisica {
   nome            String
   data_nascimento DateTime
   id_usuario      Int
-  user            Usuario  @relation(fields: [id_usuario], references: [id])
+  user            Usuario  @relation(fields: [id_usuario], references: [id], onDelete: Cascade)
 
   @@index([id_usuario], map: "tbl_pessoa_fisica_id_usuario_fkey")
   @@map("tbl_pessoa_fisica")
@@ -40,7 +41,7 @@ model PessoaJuridica {
   cnpj          String
   nome_fantasia String
   id_usuario    Int
-  user          Usuario @relation(fields: [id_usuario], references: [id])
+  user          Usuario @relation(fields: [id_usuario], references: [id], onDelete: Cascade)
 
   @@index([id_usuario], map: "tbl_pessoa_juridica_id_usuario_fkey")
   @@map("tbl_pessoa_juridica")
@@ -50,7 +51,7 @@ model Catador {
   id                Int                @id @unique @default(autoincrement())
   status            String?
   id_usuario        Int
-  user              Usuario            @relation(fields: [id_usuario], references: [id])
+  user              Usuario            @relation(fields: [id_usuario], references: [id], onDelete: Cascade)
   FavoritarCatador  FavoritarCatador[]
   materiais_catador MateriaisCatador[]
   Pedido            Pedido[]
@@ -72,8 +73,8 @@ model MateriaisCatador {
   id           Int       @id @unique @default(autoincrement())
   id_materiais Int
   id_catador   Int
-  catador      Catador   @relation(fields: [id_catador], references: [id])
-  material     Materiais @relation(fields: [id_materiais], references: [id])
+  catador      Catador   @relation(fields: [id_catador], references: [id], onDelete: Cascade)
+  material     Materiais @relation(fields: [id_materiais], references: [id], onDelete: Cascade)
 
   @@index([id_catador], map: "tbl_materiais_catador_id_catador_fkey")
   @@index([id_materiais], map: "tbl_materiais_catador_id_materiais_fkey")
@@ -102,8 +103,8 @@ model EnderecoUsuario {
   id          Int      @id @unique @default(autoincrement())
   id_endereco Int
   id_usuario  Int
-  endereco    Endereco @relation(fields: [id_endereco], references: [id])
-  usuario     Usuario  @relation(fields: [id_usuario], references: [id])
+  endereco    Endereco @relation(fields: [id_endereco], references: [id], onDelete: Cascade)
+  usuario     Usuario  @relation(fields: [id_usuario], references: [id], onDelete: Cascade)
 
   @@index([id_endereco], map: "tbl_endereco_usuario_id_endereco_fkey")
   @@index([id_usuario], map: "tbl_endereco_usuario_id_usuario_fkey")
@@ -114,7 +115,7 @@ model Gerador {
   id               Int                @id @unique @default(autoincrement())
   id_usuario       Int
   FavoritarCatador FavoritarCatador[]
-  user             Usuario            @relation(fields: [id_usuario], references: [id])
+  user             Usuario            @relation(fields: [id_usuario], references: [id], onDelete: Cascade)
   Pedido           Pedido[]
 
   @@index([id_usuario], map: "tbl_gerador_id_usuario_fkey")
@@ -125,8 +126,8 @@ model FavoritarCatador {
   id         Int     @id @unique @default(autoincrement())
   id_catador Int
   id_gerador Int
-  catador    Catador @relation(fields: [id_catador], references: [id])
-  gerador    Gerador @relation(fields: [id_gerador], references: [id])
+  catador    Catador @relation(fields: [id_catador], references: [id], onDelete: Cascade)
+  gerador    Gerador @relation(fields: [id_gerador], references: [id], onDelete: Cascade)
 
   @@index([id_catador], map: "tbl_favoritar_catador_id_catador_fkey")
   @@index([id_gerador], map: "tbl_favoritar_catador_id_gerador_fkey")
@@ -137,8 +138,8 @@ model MateriaisPedido {
   id          Int       @id @unique @default(autoincrement())
   id_material Int
   id_pedido   Int
-  material    Materiais @relation(fields: [id_material], references: [id])
-  pedido      Pedido    @relation(fields: [id_pedido], references: [id])
+  material    Materiais @relation(fields: [id_material], references: [id], onDelete: Cascade)
+  pedido      Pedido    @relation(fields: [id_pedido], references: [id], onDelete: Cascade)
 
   @@index([id_material], map: "tbl_materiais_pedido_id_material_fkey")
   @@index([id_pedido], map: "tbl_materiais_pedido_id_pedido_fkey")
@@ -154,9 +155,10 @@ model Pedido {
   id_gerador      Int
   id_endereco     Int
   MateriaisPedido MateriaisPedido[]
-  catador         Catador?          @relation(fields: [id_catador], references: [id])
-  endereco        Endereco          @relation(fields: [id_endereco], references: [id])
-  gerador         Gerador           @relation(fields: [id_gerador], references: [id])
+  catador         Catador?          @relation(fields: [id_catador], references: [id], onDelete: SetNull)
+  endereco        Endereco          @relation(fields: [id_endereco], references: [id], onDelete: Cascade)
+  Gerador         Gerador?          @relation(fields: [geradorId], references: [id], onDelete: SetNull)
+  geradorId       Int?
 
   @@index([id_catador], map: "tbl_pedido_id_catador_fkey")
   @@index([id_endereco], map: "tbl_pedido_id_endereco_fkey")

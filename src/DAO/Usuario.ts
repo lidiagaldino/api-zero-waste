@@ -501,6 +501,21 @@ class Usuario {
       return false;
     }
   }
+
+  public async delete(id: number): Promise<any> {
+    try {
+      const rs = await prisma.usuario.delete({
+        where: {
+          id,
+        },
+      });
+
+      return rs ? rs : false;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
 }
 
 export default new Usuario();
