@@ -40,6 +40,7 @@ class Endereco {
   }
 
   public async findByUser(id: number): Promise<any> {
+    console.log(id);
     const rs = await prisma.enderecoUsuario.findMany({
       where: {
         id_usuario: Number(id),
@@ -68,6 +69,7 @@ class Endereco {
 
   public async delete(id_endereco: number, id_usuario: number): Promise<any> {
     try {
+      console.log(id_usuario);
       await prisma.enderecoUsuario.deleteMany({
         where: {
           id_endereco: Number(id_endereco),

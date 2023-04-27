@@ -18,7 +18,7 @@ class EnderecoController {
       ? res
           .status(StatusCodes.INTERNAL_SERVER_ERROR)
           .json({ message: "Não foi possível criar" })
-      : res.status(StatusCodes.CREATED).json({ message: rs });
+      : res.status(StatusCodes.CREATED).json(rs);
   }
 
   public async getByUser(req: Request, res: Response) {

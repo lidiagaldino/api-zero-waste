@@ -12,6 +12,7 @@ const routes = Router();
 routes.post(
   "/",
   validation({ body: enderecoBodyValidation }),
+  auth,
   enderecoExists,
   EnderecoController.store
 );
