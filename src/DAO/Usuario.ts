@@ -19,7 +19,9 @@ class Usuario {
             foto: "https://cdn-icons-png.flaticon.com/512/3231/3231671.png",
             biografia: "Eu amo recliclagem!!",
             catador: {
-              create: {},
+              create: {
+                id_status_catador: 1,
+              },
             },
             endereco_usuario: {
               create: {
@@ -115,7 +117,9 @@ class Usuario {
             foto: "https://cdn-icons-png.flaticon.com/512/3231/3231671.png",
             biografia: "Eu amo recliclagem!!",
             catador: {
-              create: {},
+              create: {
+                id_status_catador: 2,
+              },
             },
             endereco_usuario: {
               create: {

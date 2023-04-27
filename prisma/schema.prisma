@@ -48,15 +48,18 @@ model PessoaJuridica {
 }
 
 model Catador {
-  id                Int                @id @unique @default(autoincrement())
-  status            String?
-  id_usuario        Int
-  user              Usuario            @relation(fields: [id_usuario], references: [id], onDelete: Cascade)
-  FavoritarCatador  FavoritarCatador[]
-  materiais_catador MateriaisCatador[]
-  Pedido            Pedido[]
+  id                      Int                 @id @unique @default(autoincrement())
+  id_usuario              Int
+  id_status_catador       Int
+  status_catador          StatusCatador       @relation(fields: [id_status_catador], references: [id])
+  user                    Usuario             @relation(fields: [id_usuario], references: [id], onDelete: Cascade)
+  FavoritarCatador        FavoritarCatador[]
+  tbl_fila_pedido_catador FilaPedidoCatador[]
+  materiais_catador       MateriaisCatador[]
+  Pedido                  Pedido[]
 
   @@index([id_usuario], map: "tbl_catador_id_usuario_fkey")
+  @@index([id_status_catador], map: "tbl_catador_id_status_catador_fkey")
   @@map("tbl_catador")
 }
 
@@ -147,21 +150,54 @@ model MateriaisPedido {
 }
 
 model Pedido {
-  id              Int               @id @unique @default(autoincrement())
-  created_at      DateTime          @default(now())
-  status          String
-  finished_at     DateTime?
-  id_catador      Int?
-  id_gerador      Int
-  id_endereco     Int
-  MateriaisPedido MateriaisPedido[]
-  catador         Catador?          @relation(fields: [id_catador], references: [id], onDelete: SetNull)
-  endereco        Endereco          @relation(fields: [id_endereco], references: [id], onDelete: Cascade)
-  Gerador         Gerador?          @relation(fields: [geradorId], references: [id], onDelete: SetNull)
-  geradorId       Int?
+  id                      Int                 @id @unique @default(autoincrement())
+  created_at              DateTime            @default(now())
+  finished_at             DateTime?
+  id_catador              Int?
+  id_gerador              Int
+  id_endereco             Int
+  geradorId               Int?
+  id_status               Int
+  tbl_fila_pedido_catador FilaPedidoCatador[]
+  MateriaisPedido         MateriaisPedido[]
+  Gerador                 Gerador?            @relation(fields: [geradorId], references: [id])
+  catador                 Catador?            @relation(fields: [id_catador], references: [id])
+  endereco                Endereco            @relation(fields: [id_endereco], references: [id], onDelete: Cascade)
+  tbl_status              Status              @relation(fields: [id_status], references: [id])
 
   @@index([id_catador], map: "tbl_pedido_id_catador_fkey")
   @@index([id_endereco], map: "tbl_pedido_id_endereco_fkey")
   @@index([id_gerador], map: "tbl_pedido_id_gerador_fkey")
+  @@index([geradorId], map: "tbl_pedido_geradorId_fkey")
+  @@index([id_status], map: "tbl_pedido_id_status_fkey")
   @@map("tbl_pedido")
+}
+
+model FilaPedidoCatador {
+  id          Int     @id @unique @default(autoincrement())
+  distancia   Int
+  id_pedido   Int
+  id_catador  Int
+  tbl_catador Catador @relation(fields: [id_catador], references: [id])
+  tbl_pedido  Pedido  @relation(fields: [id_pedido], references: [id])
+
+  @@index([id_catador], map: "tbl_fila_pedido_catador_id_catador_fkey")
+  @@index([id_pedido], map: "tbl_fila_pedido_catador_id_pedido_fkey")
+  @@map("tbl_fila_pedido_catador")
+}
+
+model Status {
+  id         Int      @id @unique @default(autoincrement())
+  status     String
+  tbl_pedido Pedido[]
+
+  @@map("tbl_status")
+}
+
+model StatusCatador {
+  id          Int       @id @unique @default(autoincrement())
+  status      String
+  tbl_catador Catador[]
+
+  @@map("tbl_status_catador")
 }
