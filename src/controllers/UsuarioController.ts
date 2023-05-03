@@ -25,7 +25,17 @@ class UsuarioControlelr {
         .json({ message: "Não autorizado" });
     }
 
-    const token = jwt.sign({ id: user.id }, "secret", { expiresIn: "1d" });
+    const token = jwt.sign(
+      {
+        id: user.id,
+        user_type: user.catador.length > 0 ? "CATADOR" : "GERADOR",
+        id_usuario: user.id,
+        id_modo:
+          user.catador.length > 0 ? user.catador[0].id : user.gerador[0].id,
+      },
+      "secret",
+      { expiresIn: "1d" }
+    );
 
     delete user.senha;
 

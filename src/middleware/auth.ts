@@ -21,11 +21,12 @@ export const auth = (req: Request, res: Response, next: NextFunction) => {
   console.log(token);
 
   try {
-    const data = jwt.verify(token, "secret");
+    const data = jwt.verify(token, "secret") as IPayload;
 
     const { id } = data as IPayload;
 
     req.id_usuario = id;
+    req.user = data;
 
     return next();
   } catch (error) {
