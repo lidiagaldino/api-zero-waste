@@ -20,7 +20,7 @@ class Usuario {
             biografia: "Eu amo recliclagem!!",
             catador: {
               create: {
-                id_status_catador: 1,
+                id_status_catador: 2,
               },
             },
             endereco_usuario: {

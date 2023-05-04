@@ -102,12 +102,14 @@ class Favoritar {
                     ON tbl_catador.id_usuario = tbl_usuario.id
                 INNER JOIN tbl_favoritar_catador
                     ON tbl_catador.id = tbl_favoritar_catador.id_catador
-                WHERE ST_DISTANCE_SPHERE(POINT(${getLatLong.latitude}, ${getLatLong.longitude}), POINT(latitude, longitude)) <= 10000 AND tbl_favoritar_catador.id_gerador = '${id_gerador}'
+                WHERE ST_DISTANCE_SPHERE(POINT(${getLatLong.latitude}, ${getLatLong.longitude}), POINT(latitude, longitude)) <= 10000 AND tbl_favoritar_catador.id_gerador = ${id_gerador}
                 ORDER BY distance
             LIMIT 10;
             `;
 
     const rs = await prisma.$queryRawUnsafe(sql);
+
+    console.log(sql);
 
     return rs;
   }
