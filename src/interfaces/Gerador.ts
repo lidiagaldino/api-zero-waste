@@ -9,8 +9,8 @@ export default interface IGerador {
     estado: string;
     complemento: string | null;
     numero: string;
-    latitude: string;
-    longitude: string;
+    latitude: number;
+    longitude: number;
   };
   telefone: string;
   email: string;

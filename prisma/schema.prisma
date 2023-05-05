@@ -92,8 +92,8 @@ model Endereco {
   estado           String
   cep              String
   complemento      String?
-  latitude         String
-  longitude        String
+  latitude         Float
+  longitude        Float
   apelido          String
   numero           String
   endereco_usuario EnderecoUsuario[]

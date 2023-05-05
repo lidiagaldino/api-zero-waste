@@ -58,6 +58,8 @@ class Gerador {
             LIMIT 10;
             `;
 
+      console.log(sql);
+
       const rs = await prisma.$queryRawUnsafe(sql);
 
       return rs;

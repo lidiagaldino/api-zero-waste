@@ -68,6 +68,22 @@ class UsuarioControlelr {
     const body = req.body;
     const { id_usuario } = req;
 
+    const user = await Usuario.getUserById(Number(id_usuario));
+
+    if (!user) {
+      return res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ message: "Id informado não existe" });
+    }
+
+    const isPassValid = await bcrypt.compare(body.senha, user.senha);
+
+    if (!isPassValid) {
+      return res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ message: "Senha incorreta" });
+    }
+
     const rs = await Usuario.updateUser(Number(id_usuario), body);
 
     return rs

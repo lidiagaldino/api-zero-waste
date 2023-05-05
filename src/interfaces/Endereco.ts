@@ -9,6 +9,6 @@ export default interface IEndereco {
   complemento: string | null;
   apelido: string;
   numero: string;
-  latitude: string;
-  longitude: string;
+  latitude: number;
+  longitude: number;
 }

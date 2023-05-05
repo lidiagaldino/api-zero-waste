@@ -132,8 +132,8 @@ class Usuario {
                     logradouro: usuario.endereco.logradouro,
                     complemento: usuario.endereco.complemento,
                     apelido: "Principal",
-                    latitude: usuario.endereco.latitude,
-                    longitude: usuario.endereco.longitude,
+                    latitude: Number(usuario.endereco.latitude),
+                    longitude: Number(usuario.endereco.longitude),
                     numero: usuario.endereco.numero,
                   },
                 },
@@ -413,7 +413,6 @@ class Usuario {
         },
         data: {
           email: user.email,
-          senha: bcrypt.hashSync(user.senha),
           telefone: user.telefone,
           biografia: user.biografia,
           foto: user.foto,
