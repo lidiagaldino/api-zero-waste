@@ -51,6 +51,7 @@ model Catador {
   id                      Int                 @id @unique @default(autoincrement())
   id_usuario              Int
   id_status_catador       Int
+  avaliacao               Avaliacao[]
   status_catador          StatusCatador       @relation(fields: [id_status_catador], references: [id])
   user                    Usuario             @relation(fields: [id_usuario], references: [id], onDelete: Cascade)
   FavoritarCatador        FavoritarCatador[]
@@ -117,6 +118,7 @@ model EnderecoUsuario {
 model Gerador {
   id               Int                @id @unique @default(autoincrement())
   id_usuario       Int
+  avaliacao        Avaliacao[]
   FavoritarCatador FavoritarCatador[]
   user             Usuario            @relation(fields: [id_usuario], references: [id], onDelete: Cascade)
   Pedido           Pedido[]
@@ -159,9 +161,9 @@ model Pedido {
   id_status               Int
   tbl_fila_pedido_catador FilaPedidoCatador[]
   MateriaisPedido         MateriaisPedido[]
-  Gerador                 Gerador?            @relation(fields: [id_gerador], references: [id])
   catador                 Catador?            @relation(fields: [id_catador], references: [id])
   endereco                Endereco            @relation(fields: [id_endereco], references: [id], onDelete: Cascade)
+  Gerador                 Gerador             @relation(fields: [id_gerador], references: [id])
   tbl_status              Status              @relation(fields: [id_status], references: [id])
 
   @@index([id_catador], map: "tbl_pedido_id_catador_fkey")
@@ -198,4 +200,17 @@ model StatusCatador {
   tbl_catador Catador[]
 
   @@map("tbl_status_catador")
+}
+
+model Avaliacao {
+  id          Int     @id @unique @default(autoincrement())
+  nota        Float
+  id_gerador  Int
+  id_catador  Int
+  tbl_catador Catador @relation(fields: [id_catador], references: [id])
+  tbl_gerador Gerador @relation(fields: [id_gerador], references: [id])
+
+  @@index([id_catador], map: "tbl_avaliacao_id_catador_fkey")
+  @@index([id_gerador], map: "tbl_avaliacao_id_gerador_fkey")
+  @@map("tbl_avaliacao")
 }
