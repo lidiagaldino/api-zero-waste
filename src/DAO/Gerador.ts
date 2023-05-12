@@ -41,7 +41,7 @@ class Gerador {
       });
 
       const sql = `
-            SELECT tbl_catador.id as id_catador, tbl_usuario.id as id_usuario, logradouro, cidade, numero, tbl_usuario.foto, tbl_pessoa_fisica.nome, tbl_pessoa_juridica.nome_fantasia, ST_DISTANCE_SPHERE(POINT(${getLatLong.latitude}, ${getLatLong.longitude}), POINT(latitude, longitude)) AS distance
+            SELECT tbl_catador.id as id_catador, tbl_usuario.id as id_usuario, logradouro, cidade, numero, tbl_usuario.foto, tbl_pessoa_fisica.nome, tbl_pessoa_juridica.nome_fantasia, ST_DISTANCE_SPHERE(POINT(${getLatLong.longitude}, ${getLatLong.latitude}), POINT(longitude, latitude)) AS distance
                 FROM tbl_endereco
                 INNER JOIN tbl_endereco_usuario
                     ON tbl_endereco_usuario.id_endereco = tbl_endereco.id
@@ -53,7 +53,7 @@ class Gerador {
                     ON tbl_pessoa_juridica.id_usuario = tbl_usuario.id
                 INNER JOIN tbl_catador
                     ON tbl_catador.id_usuario = tbl_usuario.id
-                WHERE ST_DISTANCE_SPHERE(POINT(${getLatLong.latitude}, ${getLatLong.longitude}), POINT(latitude, longitude)) <= 10000
+                WHERE ST_DISTANCE_SPHERE(POINT(${getLatLong.longitude}, ${getLatLong.latitude}), POINT(longitude, latitude)) <= 10000
                 ORDER BY distance
             LIMIT 10;
             `;

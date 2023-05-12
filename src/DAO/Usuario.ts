@@ -419,6 +419,8 @@ class Usuario {
         },
       });
 
+      console.log(user);
+
       let retorno: any;
 
       let fisico_juridico: any;
@@ -467,6 +469,7 @@ class Usuario {
 
       return fisico_juridico && rs ? retorno : false;
     } catch (error) {
+      console.log(error);
       return false;
     }
   }

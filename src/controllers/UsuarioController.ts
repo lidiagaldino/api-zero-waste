@@ -78,6 +78,8 @@ class UsuarioControlelr {
 
     const isPassValid = await bcrypt.compare(body.senha, user.senha);
 
+    console.log(isPassValid);
+
     if (!isPassValid) {
       return res
         .status(StatusCodes.BAD_REQUEST)
