@@ -9,17 +9,19 @@ datasource db {
 }
 
 model Usuario {
-  id               Int               @id @unique @default(autoincrement())
-  email            String
-  senha            String
-  telefone         String
-  foto             String
-  biografia        String?
-  catador          Catador[]
-  endereco_usuario EnderecoUsuario[]
-  gerador          Gerador[]
-  pessoa_fisica    PessoaFisica[]
-  pessoa_juridica  PessoaJuridica[]
+  id                Int               @id @unique @default(autoincrement())
+  email             String
+  senha             String
+  telefone          String
+  foto              String
+  biografia         String?
+  pontos            Int
+  catador           Catador[]
+  tbl_cupom_usuario CupomUsuario[]
+  endereco_usuario  EnderecoUsuario[]
+  gerador           Gerador[]
+  pessoa_fisica     PessoaFisica[]
+  pessoa_juridica   PessoaJuridica[]
 
   @@map("tbl_usuario")
 }
@@ -213,4 +215,28 @@ model Avaliacao {
   @@index([id_catador], map: "tbl_avaliacao_id_catador_fkey")
   @@index([id_gerador], map: "tbl_avaliacao_id_gerador_fkey")
   @@map("tbl_avaliacao")
+}
+
+model Cupom {
+  id                Int            @id @unique @default(autoincrement())
+  nome              String
+  descricao         String
+  criterios         String
+  pontos            Int
+  codigo            String
+  tbl_cupom_usuario CupomUsuario[]
+
+  @@map("tbl_cupom")
+}
+
+model CupomUsuario {
+  id          Int     @id @unique @default(autoincrement())
+  id_cupom    Int
+  id_usuario  Int
+  tbl_cupom   Cupom   @relation(fields: [id_cupom], references: [id])
+  tbl_usuario Usuario @relation(fields: [id_usuario], references: [id])
+
+  @@index([id_cupom], map: "tbl_cupom_usuario_id_cupom_fkey")
+  @@index([id_usuario], map: "tbl_cupom_usuario_id_usuario_fkey")
+  @@map("tbl_cupom_usuario")
 }

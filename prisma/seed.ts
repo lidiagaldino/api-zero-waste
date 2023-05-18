@@ -19,6 +19,7 @@ async function main() {
       data: {
         email: "lidia@gmail.com",
         senha: bcrypt.hashSync("lidia123", 8),
+        pontos: 10,
         telefone: "12345678987654",
         foto: "https://cdn-icons-png.flaticon.com/512/5231/5231019.png",
         pessoa_fisica: {
@@ -71,6 +72,7 @@ async function main() {
       data: {
         email: "eduardo@gmail.com",
         senha: bcrypt.hashSync("eduardo123", 8),
+        pontos: 10,
         foto: "https://cdn-icons-png.flaticon.com/512/5231/5231019.png",
         telefone: "98765432123456",
         pessoa_fisica: {
@@ -125,6 +127,7 @@ async function main() {
       data: {
         email: "miguel@gmail.com",
         senha: bcrypt.hashSync("miguel123", 8),
+        pontos: 10,
         foto: "https://cdn-icons-png.flaticon.com/512/5231/5231019.png",
         telefone: "98765432123456",
         pessoa_fisica: {

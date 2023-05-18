@@ -14,6 +14,7 @@ class Usuario {
         const result = await prisma.usuario.create({
           data: {
             email: usuario.email,
+            pontos: 10,
             telefone: usuario.telefone,
             senha: bcrypt.hashSync(usuario.senha, 8),
             foto: "https://cdn-icons-png.flaticon.com/512/3231/3231671.png",
@@ -112,6 +113,7 @@ class Usuario {
         const result = await prisma.usuario.create({
           data: {
             email: usuario.email,
+            pontos: 10,
             telefone: usuario.telefone,
             senha: bcrypt.hashSync(usuario.senha, 8),
             foto: "https://cdn-icons-png.flaticon.com/512/3231/3231671.png",
@@ -209,6 +211,7 @@ class Usuario {
         const result = await prisma.usuario.create({
           data: {
             email: usuario.email,
+            pontos: 10,
             telefone: usuario.telefone,
             senha: bcrypt.hashSync(usuario.senha),
             foto: "https://cdn-icons-png.flaticon.com/512/3231/3231671.png",
@@ -281,6 +284,7 @@ class Usuario {
         const result = await prisma.usuario.create({
           data: {
             email: usuario.email,
+            pontos: 10,
             telefone: usuario.telefone,
             senha: bcrypt.hashSync(usuario.senha),
             foto: "https://cdn-icons-png.flaticon.com/512/3231/3231671.png",
