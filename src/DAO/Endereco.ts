@@ -1,6 +1,5 @@
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
 import IEndereco from "../interfaces/Endereco";
+import prisma from "../lib/db";
 
 class Endereco {
   public async newEndereco(endereco: Omit<IEndereco, "id">) {

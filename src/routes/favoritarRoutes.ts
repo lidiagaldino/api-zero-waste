@@ -10,6 +10,7 @@ import { enderecoExists } from "../middleware/enderecoExists";
 const routes = Router();
 
 routes.get("/:id", auth, FavoritarController.index);
+routes.get("/geradores/:id", auth, FavoritarController.getGeradores);
 routes.patch(
   "/",
   validation({ body: favoritarBodyValidation }),

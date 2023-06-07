@@ -42,6 +42,16 @@ class FavoritarController {
       : res.status(StatusCodes.NOT_FOUND).json({});
   }
 
+  public async getGeradores(req: Request, res: Response) {
+    const { id } = req.params;
+
+    const rs = await Favoritar.getGeradores(Number(id));
+
+    return rs.length > 0
+      ? res.status(StatusCodes.OK).json(rs)
+      : res.status(StatusCodes.NOT_FOUND).json({});
+  }
+
   public async getById(req: Request, res: Response) {
     const { id_catador, id_gerador } = req.params;
 

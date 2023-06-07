@@ -1,5 +1,4 @@
-import { MateriaisCatador, PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
+import prisma from "../lib/db";
 
 class Materiais {
   public async getAll(): Promise<any> {

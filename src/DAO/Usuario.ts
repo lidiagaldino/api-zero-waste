@@ -1,11 +1,9 @@
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
-
 import bcrypt from "bcryptjs";
 
 import ICatador from "../interfaces/Catador";
 import IGerador from "../interfaces/Gerador";
 import IUsuario from "../interfaces/Usuario";
+import prisma from "../lib/db";
 
 class Usuario {
   public async newUserCatador(usuario: Omit<ICatador, "id">): Promise<any> {
