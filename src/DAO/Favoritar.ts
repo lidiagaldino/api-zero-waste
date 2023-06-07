@@ -1,5 +1,4 @@
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
+import prisma from "../lib/db";
 
 type Favorito = {
   id: number;
@@ -42,6 +41,28 @@ class Favoritar {
     }
 
     return result;
+  }
+
+  public async getGeradores(id_catador: number): Promise<any> {
+    const rs = await prisma.favoritarCatador.findMany({
+      where: {
+        id_catador,
+      },
+      include: {
+        gerador: {
+          include: {
+            user: {
+              include: {
+                pessoa_fisica: true,
+                pessoa_juridica: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    return rs.length > 0 ? rs : false;
   }
 
   public async getAll(id_gerador: number): Promise<any> {
